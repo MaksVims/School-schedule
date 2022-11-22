@@ -1,0 +1,9 @@
+{
+  "PORT": 5000,
+  "MONGO_URL_MAIN": "mongodb://0.0.0.0:27017/main",
+  "MONGO_URL_DATA_PROTECTOR": "mongodb://0.0.0.0:27017/data_protector",
+  "SECRET_JWT": "schedule_school116",
+  "BASE_URL": "http://localhost:5000",
+  "LOGIN": "school_admin_116",
+  "PASSWORD": "Sch-116"
+}

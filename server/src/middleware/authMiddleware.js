@@ -1,0 +1,29 @@
+const jwt = require('jsonwebtoken')
+const config = require('config')
+const isValidAdminData = require('../helpers/isValidAdminData')
+
+const authMiddleware = (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next()
+  }
+
+  try {
+    const token = req.cookies.token
+
+    if (!token) {
+      return res.status(403).json('Вы не можете осуществить данную операцию, посольку не являетесь администратором')
+    }
+
+    const { login, password } = jwt.verify(token, config.get('SECRET_JWT'))
+
+    if (!isValidAdminData(login, password)) {
+      return res.status(403).json('Вы не можете осуществить данную операцию, посольку не являетесь администратором')
+    }
+    
+    next()
+  } catch (e) {
+    res.status(403).json('Вы не можете осуществить данную операцию, посольку не являетесь администратором')
+  }
+}
+
+module.exports = authMiddleware

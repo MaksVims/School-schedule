@@ -1,0 +1,87 @@
+// Common style
+// ----------- Color -------------
+$blue: #5cc7f1;
+$darkblue: #0850f2;
+$title-color: black;
+$text-color: rgb(46, 46, 46);
+$text-error-color: red;
+$text-success-color: green;
+
+// Popup
+$bg-popup: rgba(0, 0, 0, .6);
+
+// Input
+$border-input: #9aa7ac;
+
+// bg
+$bg-wrapper: rgb(228, 228, 228);
+
+// btn 
+$btn-admin-dark: rgb(46, 46, 46);
+
+$btn-formlogin-color: white;
+$btn-formlogin-bg: #2afa46;
+$btn-formlogin-hover-bg: #1c8d2b;
+$btn-formlogin-disable-bg: darkgrey;
+
+$btn-select-popup-border: lightgray;
+$btn-select-popup-state-border: darkgray;
+
+$btn-select-menu-color: #0850f2;
+$btn-select-menu-bg: white;
+
+// cell
+$cell-border: gray;
+$cell-active-border: #0850f2;
+$cell-active-text: white;
+
+//loader
+$loader-home: #5cc7f1;
+$loader-admin: #5cc7f1;
+
+//icon 
+$icon-loadfile: #1c8d2b;
+
+//gradient
+$gradient-main: linear-gradient(90deg, $darkblue 0%, $blue 50%, $darkblue 100%);
+$gradient-secondary: radial-gradient(circle,  $darkblue 0%, $blue 50%, $darkblue 100%);;
+
+
+// ----------- Font-Size -------------
+$text-small: 12px;
+$text-normal: 18px;
+$text-big: 24px;
+$text-veryBig: 36px;
+$text-overSize: 48px;
+
+$title-small: 24px;
+$title-normal: 32px;
+$title-big: 48px;
+$title-veryBig: 64px;
+
+$subtitle-small: 18px;
+$subtitle-normal: 24px;
+$subtitle-big: 32px;
+
+// ----------- Padding, Margin, Gap -------------
+$gap-small: 10px;
+$gap-normal: 20px;
+$gap-big: 40px;
+$gap-veryBig: 100px;
+
+// ----------- Border-radius -------------
+$radius-small: 5px;
+$radius-normal: 10px;
+$radius-big: 20px;
+
+// ----------- QueryPoints -------------
+$mini: 290px;
+$mobile-small: 440px;
+$mobile: 600px;
+$tabletop: 1200px;
+$desktop:1600px;
+$desltop-big: 1900px;
+
+$height-small: 600px;
+$height-mobile: 700px;
+$height-tabletop: 800px;

@@ -1,0 +1,118 @@
+<script setup lang="ts">
+import { ref, toRefs, onMounted } from "vue";
+import { useClassStore } from "../store";
+import { ButtonApp, PopupApp } from "../components/UI";
+import { ListVariants } from "../components";
+import { useLocalStorage } from "../hooks";
+
+const { setSelectNumberClass, setSelectCourseClass } = useClassStore();
+const {
+  selectedCourseClass,
+  selectedNumberClass,
+  coursesClasses,
+  numbersClasses,
+} = toRefs(useClassStore());
+
+const isShowCourseClasses = ref(false);
+const isShowNumberClasses = ref(false);
+
+const hideCourseClass = () => (isShowCourseClasses.value = false);
+const hideNumberClass = () => (isShowNumberClasses.value = false);
+const showCourseClass = () => (isShowCourseClasses.value = true);
+const showNumberClass = () => (isShowNumberClasses.value = true);
+
+// Получаем данные из локального хранилища
+const storageSelectCourse = useLocalStorage('currentCourse')
+const storageSelectNumber = useLocalStorage('currentNumber')
+
+onMounted(() => {
+  // Установка данных о выбранном курсе и номере из localStorage в state
+  if (coursesClasses.value.includes(storageSelectCourse.value)) {
+    setSelectCourseClass(storageSelectCourse.value)
+  } if (numbersClasses.value.includes(storageSelectNumber.value)) {
+    setSelectNumberClass(storageSelectNumber.value)
+  }
+})
+
+const handleSetSelectCourseClass = (value: string) => {
+  hideCourseClass();
+  setSelectCourseClass(value);
+  storageSelectCourse.value = value
+  showNumberClass()
+};
+
+const handleSetSelectNumberClass = (value: string) => {
+  hideNumberClass();
+  setSelectNumberClass(value);
+  storageSelectNumber.value = value
+};
+
+</script>
+
+<template>
+  <div class="select-menu">
+    <ButtonApp class="menu-btn" @pointerdown="showCourseClass">
+      {{
+          !selectedCourseClass ? "Выбрать класс" : `Класс ${selectedCourseClass}`
+      }}
+    </ButtonApp>
+    <ButtonApp class="menu-btn" @pointerdown="showNumberClass">
+      {{
+          !selectedNumberClass ? "Выбрать номер" : `Номер ${selectedNumberClass}`
+      }}
+    </ButtonApp>
+
+    <PopupApp :handleClose="hideCourseClass" :isShow="isShowCourseClasses">
+      <div class="modal__content">
+        <ListVariants class="modal__content center" :items="coursesClasses.filter(c => c != selectedCourseClass)"
+          :handleClick="handleSetSelectCourseClass" />
+      </div>
+    </PopupApp>
+
+    <PopupApp :handleClose="hideNumberClass" :isShow="isShowNumberClasses">
+      <div class="modal__content">
+        <h2>Номер класса</h2>
+        <ListVariants class="modal__content center" :items="numbersClasses" :handleClick="handleSetSelectNumberClass" />
+      </div>
+    </PopupApp>
+  </div>
+</template>
+
+<style scoped lang="scss">
+@import "@/style/var.scss";
+
+.select-menu {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: $gap-big;
+  z-index: 10;
+}
+
+.menu-btn {
+  transition: box-shadow linear 0.3s;
+  border-radius: $radius-normal;
+  font-size: $text-big;
+  background: $btn-select-menu-bg;
+  color: $btn-select-menu-color;
+  background: $btn-select-menu-bg;
+  padding: 10px 60px;
+
+  &:active,
+  &:hover {
+    transition: box-shadow linear 0.3s;
+    box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.4);
+  }
+}
+
+.modal__content {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 700px;
+  min-height: 400px;
+  padding: 40px 20px;
+  border-radius: $radius-normal;
+  background-color: white;
+}
+</style>

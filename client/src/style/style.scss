@@ -1,0 +1,96 @@
+@import './var.scss';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: inherit;
+  user-select: none;
+  font-family: 'Roboto', 'Open Sans', 'Times New Roman', sans-serif;
+  font-size: inherit;
+}
+
+html,
+body,
+#app {
+  font-size: $text-normal;
+  font-weight: 400;
+  color: $text-color;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+h1 {
+  font-size: $title-normal;
+  font-weight: 700;
+}
+
+h2,
+h3 {
+  font-size: $subtitle-normal;
+  font-weight: 700;
+}
+
+h1,
+h2 {
+  color: $title-color;
+}
+
+li,
+ul {
+  list-style: none;
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+button,
+svg {
+  cursor: pointer;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-size: 32px;
+
+  &__center {
+    text-align: center;
+  }
+}
+
+.hidden {
+  position: absolute;
+  width: 1px;
+  height: 1x;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  background: transparent;
+  overflow: hidden
+}
+
+@media (max-width: $mobile) {
+  .title {
+    font-size: $title-small;
+  }
+}
