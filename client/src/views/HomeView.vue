@@ -79,7 +79,7 @@ onMounted(async () => {
 }
 
 .main {
-  height: 78%;
+  height: 80%;
 }
 
 .home {
@@ -89,9 +89,9 @@ onMounted(async () => {
 .header {
   position: relative;
   display: flex;
-  height: 22%;
+  height: 20%;
   flex-direction: column;
-  padding: 30px;
+  padding: 40px;
   gap: $gap-big;
   text-align: center;
   background: $gradient-main;
@@ -145,6 +145,12 @@ onMounted(async () => {
   .header {
     padding: 20px;
     gap: $gap-normal;
+  }
+}
+
+@media (max-height: $height-desktop) {
+  .header {
+    padding: 30px;
   }
 }
 </style>
