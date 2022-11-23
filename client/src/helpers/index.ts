@@ -1,5 +1,5 @@
 export { getDayDate } from './getDayDate'
 export { numberSort } from './numberSort'
-export { setCookie } from './cookie'
 export { getLesson } from './getLesson'
 export { getCurrentOrderLesson } from './getCurrentOrderLesson'
+export { installHeightCell } from './/installHeightCell'

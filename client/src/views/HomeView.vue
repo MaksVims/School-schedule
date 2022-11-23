@@ -1,13 +1,27 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { ClassService } from "../api";
 import { SelectMenu, Schedule, Clock } from "../components";
 import { Loader, Snow } from '../components/UI'
-import { useFetch, useTitle } from "../hooks";
+import { useFetch, useTitle, useEvent } from "../hooks";
 import { useClassStore } from "../store";
 
 const { setClasses } = useClassStore();
+const homeRef = ref<null | HTMLDivElement>(null)
+
 useTitle()
+
+// Отслеживаем изменение окна и добавляем отступ при необходимости
+useEvent(window, 'resize', (e: Event) => {
+  const widthContent = Number(document.documentElement.clientWidth)
+  const diff = window.innerWidth - widthContent
+
+  if (diff && homeRef.value && widthContent > 1217) {
+    homeRef.value.style.paddingRight = diff + 'px'
+  } else if (homeRef.value) {
+    homeRef.value.style.paddingRight = '0px'
+  }
+})
 
 // Подписка для автообновления данных расписания
 const subscribeUpdateData = async () => {
@@ -36,12 +50,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="!loading" class="home">
+  <div v-if="!loading" class="home" ref="homeRef">
     <header class="header">
       <h1 class=" title header__title">Расписание уроков школы № 116</h1>
       <Snow />
       <div class="header__clock">
-        <Clock class="clock"/>
+        <Clock class="clock" />
       </div>
       <SelectMenu />
     </header>
@@ -82,6 +96,8 @@ onMounted(async () => {
   text-align: center;
   background: $gradient-main;
 
+
+
   &__clock {
     position: absolute;
     right: 30px;
@@ -110,7 +126,9 @@ onMounted(async () => {
 
 @media (max-width: $desktop) {
   .header {
-    &__title, .clock {
+
+    &__title,
+    .clock {
       font-size: $title-normal;
     }
   }
@@ -120,6 +138,13 @@ onMounted(async () => {
   .home {
     width: 1200px;
     overflow: auto;
+  }
+}
+
+@media (max-height: $height-tabletop) {
+  .header {
+    padding: 20px;
+    gap: $gap-normal;
   }
 }
 </style>
