@@ -15,11 +15,13 @@ class AuthController {
       const token = jwt.sign(
         { login, password },
         config.get('SECRET_JWT'),
-        { expiresIn: '1h' }
+        { expiresIn: '30d' }
       )
       res.cookie('token', token, {
         maxAge: 3600 * 24 * 1000,
-        httpOnly: true
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true
       })
 
       res.status(200).json({ token })
