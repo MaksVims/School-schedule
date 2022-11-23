@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue-demi";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   inheritAttrs: false,
@@ -14,6 +14,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 @import '@/style/var.scss';
+
 .btn {
   cursor: pointer;
   padding: 10px 15px;

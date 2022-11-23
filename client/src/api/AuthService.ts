@@ -1,16 +1,15 @@
-import axios from "axios";
 import { routesClasses } from '../api/routesClasses'
+import { axiosApp } from './axiosApp'
 
 export class AuthService {
 
   static async login(login: string, password: string) {
-    const response = await axios.post<{ token: string }>(routesClasses.authenticate, { login, password })
+    const response = await axiosApp.post<{ token: string }>(routesClasses.authenticate, { login, password })
     return response.data
   }
 
   static async checkAccess() {
-    axios.defaults.withCredentials = true
-    const response = await axios.get<{ message: boolean }>(routesClasses.checkAccess)
+    const response = await axiosApp.get<{ message: boolean }>(routesClasses.checkAccess)
     return response.data.message
   }
 }

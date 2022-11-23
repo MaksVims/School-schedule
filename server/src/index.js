@@ -1,19 +1,15 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const config = require('config')
-const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const corsMiddleware = require('./middleware/corsMiddleware')
 
 const app = express()
-app.use(cors({
-  credentials: true,
-  origin: 'http://localhost:5173'
-}))
 
 app.use(cookieParser('cookie'))
 app.use(express.static(__dirname))
 app.use(express.json({ extends: true }))
 
+app.use('*', corsMiddleware)
 app.use('/api/class', require('./routes/class'))
 app.use('/auth', require('./routes/auth'))
 

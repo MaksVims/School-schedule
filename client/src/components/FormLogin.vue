@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { toRefs, ref, watch, computed } from "vue";
 import { InputApp, ButtonApp, Loader } from "../components/UI";
+import { useEvent } from '../hooks/useEvent'
 
 interface FormLoginProps {
   fetch: () => Promise<void>;
@@ -18,6 +19,12 @@ const emit = defineEmits<{
 const { fetch } = props;
 const { loading, login, password } = toRefs(props);
 const isDisabled = ref(true);
+
+useEvent(document.body, 'keydown', (e: Event) => {
+  if ((e as KeyboardEvent).code === 'Enter' && password.value && login.value && isDisabled.value === false) {
+    fetch()
+  }
+})
 
 const loginValue = computed({
   get: () => login.value,
@@ -87,7 +94,8 @@ watch([login, password], () => {
     background-color: $btn-formlogin-bg;
     color: $btn-formlogin-color;
 
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
       transition: background-color 0.3s;
       background-color: $btn-formlogin-hover-bg;
     }

@@ -2,7 +2,7 @@
 import { ref, watch } from "vue";
 import { TextError } from "../components/UI";
 import { FormLogin } from "../components";
-import { useFetch, useTitle } from "../hooks";
+import { useFetch, useTitle} from "../hooks";
 import { AuthService } from "../api";
 import { router } from '../router'
 import { SITE_ROUTES } from '../consts'
@@ -31,6 +31,7 @@ watch(error, () => {
     password.value = "";
   }
 });
+
 </script>
 
 <template>
