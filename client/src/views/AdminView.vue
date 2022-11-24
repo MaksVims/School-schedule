@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { ClassService } from '../api';
 import { SvgAddFile } from '../components/Svg'
 import { useFetch, useTitle } from '../hooks';
 import { Loader, TextError, TextSuccess } from '../components/UI'
+import { ERRORS, SITE_ROUTES } from '../consts'
 
 const file = ref<any>('')
+const isAuth = ref(true)
 const filePicker = ref<null | HTMLInputElement>(null)
 const isSuccess = ref(false)
 useTitle()
@@ -34,19 +36,25 @@ const changeFile = (e: Event) => {
 }
 
 const clickFilePicker = () => {
-  if (!filePicker.value) {
+  if (!filePicker.value || !isAuth.value) {
     return
-  }
-
-  if (!isSuccess.value) {
-    filePicker.value.click()
   }
 
   if (error.value) {
     error.value = null
     filePicker.value.value = ''
   }
+
+  if (!isSuccess.value) {
+    filePicker.value.click()
+  }
 }
+
+watch(error, () => {
+  if (error.value === ERRORS.loadFile403) {
+    isAuth.value = false
+  }
+})
 
 </script>
 
@@ -56,6 +64,7 @@ const clickFilePicker = () => {
       <h1 class="title title__center">Панель администратора</h1>
     </header>
     <main class="admin__content center">
+      <RouterLink class="admin__link" :to="SITE_ROUTES.home">Перейти к расписанию</RouterLink>
       <section class="content__container content">
         <div class="content__loadform">
           <div class="content__descriptions">
@@ -71,7 +80,10 @@ const clickFilePicker = () => {
               <img v-else src="@/assets/image/error.png" alt="error" class="img__progress" />
             </div>
           </form>
-          <TextError class="notation" v-if="error">Проверьте отправляемый файл!</TextError>
+          <TextError class="notation" v-if="error && !isAuth">
+            Вы не авторизованы в системе! <RouterLink :to="SITE_ROUTES.login">Авторизоваться</RouterLink>
+          </TextError>
+          <TextError class="notation" v-else-if="error">Проверьте отправляемый файл!</TextError>
           <TextSuccess class="notation" v-else-if="isSuccess">Загрузка прошла успешно!</TextSuccess>
         </div>
       </section>
@@ -94,8 +106,15 @@ const clickFilePicker = () => {
   }
 
   &__content {
+    position: relative;
     flex-grow: 1;
     flex-shrink: 0;
+  }
+
+  &__link {
+    position: absolute;
+    right: 30px;
+    top: 20px;
   }
 }
 
@@ -216,15 +235,8 @@ const clickFilePicker = () => {
   }
 
   .dropzone {
-    position: relative;
     width: 250px;
     height: 250px;
-    cursor: pointer;
-    border: 2px dashed black;
-
-    &--disable {
-      cursor: auto;
-    }
   }
 }
 </style>

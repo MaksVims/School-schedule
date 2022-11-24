@@ -96,8 +96,6 @@ onMounted(async () => {
   text-align: center;
   background: $gradient-main;
 
-
-
   &__clock {
     position: absolute;
     right: 30px;
@@ -127,8 +125,10 @@ onMounted(async () => {
 @media (max-width: $desktop) {
   .header {
 
-    &__title,
-    .clock {
+    &__title {
+      font-size: $title-medium;
+    }
+    & .clock {
       font-size: $title-normal;
     }
   }
@@ -151,6 +151,7 @@ onMounted(async () => {
 @media (max-height: $height-desktop) {
   .header {
     padding: 30px;
+    gap: $gap-medium;
   }
 }
 </style>
