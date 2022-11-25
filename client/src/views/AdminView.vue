@@ -3,24 +3,24 @@ import { ref, watch } from 'vue';
 import { ClassService } from '../api';
 import { SvgAddFile } from '../components/Svg'
 import { useFetch, useTitle } from '../hooks';
-import { Loader, TextError, TextSuccess } from '../components/UI'
+import { CheckboxApp, Loader, TextError, TextSuccess } from '../components/UI'
 import { ERRORS, SITE_ROUTES } from '../consts'
 
 const file = ref<any>('')
 const isAuth = ref(true)
 const filePicker = ref<null | HTMLInputElement>(null)
 const isSuccess = ref(false)
-const isTempFile = ref(false)
+const isMainFile = ref(false)
 useTitle()
 
 const { fetch: loadFile, loading, error } = useFetch(async () => {
   const formData = new FormData()
   formData.append('file', file.value)
-  let response: null | {message: string}= null
-  if(isTempFile.value) {
-    response = await ClassService.loadTempSchedule(formData)
+  let response: null | { message: string } = null
+  if (isMainFile.value) {
+    response = await ClassService.loadSchedule(formData)
   } else {
-    response =  await ClassService.loadSchedule(formData)
+    response = await ClassService.loadTempSchedule(formData)
   }
   if (response) {
     isSuccess.value = true
@@ -62,6 +62,10 @@ watch(error, () => {
   }
 })
 
+watch(isMainFile, () => {
+  console.log(isMainFile.value);
+})
+
 </script>
 
 <template>
@@ -74,14 +78,12 @@ watch(error, () => {
       <section class="content__container content">
         <div class="content__loadform">
           <div class="content__descriptions">
-            <p class="title__center">{{isTempFile ? 'Временное раписание' : 'Выбрать excel файл для обновления расписания'}}</p>
+            <p class="title__center">{{ isMainFile ? 'Загрузить основное раписание' : 'Загрузить временное раписание' }}
+            </p>
             <p class="title__center">расширение файла .xlsx</p>
           </div>
           <form @submit.prevent="" class="center form">
-            <label>
-              <span>Временное расписание</span>
-              <input type="checkbox" v-model="isTempFile">
-            </label>
+            <CheckboxApp v-model="isMainFile">Основное расписание вкл.</CheckboxApp>
             <input class="hidden" type="file" @change="changeFile" accept=".xlsx" ref="filePicker">
             <div :class="['dropzone', 'center', { 'dropzone--disable': isSuccess }]" @click="clickFilePicker">
               <Loader class="loader" v-if="loading" />
@@ -175,7 +177,9 @@ watch(error, () => {
 .form {
   display: flex;
   flex-direction: column;
+  gap: $gap-normal;
 }
+
 .notation {
   position: absolute;
   left: 50%;

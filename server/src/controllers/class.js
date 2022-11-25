@@ -42,12 +42,12 @@ class ClassController {
 
       // TODO: получать данные из Promise.all
       // Создание моделей в main db
-      await Promise.all(result.map(async ({ course, children }) => {
+      const allClasses = await Promise.all(result.map(async ({ course, children }) => {
         return await ClassService.createCourse(course, children)
       }))
 
       // вызываем emit события для обновления данных на всех подключенных клиентах
-      let allClasses = await ClassService.getAll()
+      // let allClasses = await ClassService.getAll()
       emitter.emit(eventsName.updateData, allClasses)
 
       res.status(200).json({ message: 'Успешно!' })
@@ -71,23 +71,23 @@ class ClassController {
       const updatedTempCourses = resultTemp.map(tempCourse => {
         return getUpdatedTempCourse(tempCourse, getCourse(result, tempCourse.course))
       })
-     
-       // Очистка backup db от старых данных
+
+      // Очистка backup db от старых данных
       await ClassService.cleanClassesProtector()
 
-       // Создание моделей из во protector db, если ошибок не будет, обновится main db
+      // Создание моделей из во protector db, если ошибок не будет, обновится main db
       await ClassService.checkClassDataProtector(updatedTempCourses)
 
-       // Очистка main db от старых данных
+      // Очистка main db от старых данных
       await ClassService.cleanClassesMain()
 
       // TODO: получать данные из Promise.all
       // Создание моделей в main db
-      await Promise.all(updatedTempCourses.map(async ({ course, children }) => {
+      const allClasses = await Promise.all(updatedTempCourses.map(async ({ course, children }) => {
         return await ClassService.createCourse(course, children)
       }))
 
-      let allClasses = await ClassService.getAll()
+      // let allClasses = await ClassService.getAll()
       emitter.emit(eventsName.updateData, allClasses)
 
       res.status(200).json({ message: 'Успешно!' })
