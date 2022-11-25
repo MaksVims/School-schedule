@@ -14,6 +14,11 @@ export class ClassService {
     return response.data
   }
 
+  static async loadTempSchedule(data: FormData) {
+    const response = await axiosApp.post<{ message: string }>(routesClasses.loadTempData, data)
+    return response.data
+  }
+
   static async subscribeUpdateData() {
     const response = await axiosApp.get<{ message: CourseClass[] }>(routesClasses.updateData)
     return response.data.message

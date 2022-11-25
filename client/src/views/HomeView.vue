@@ -91,8 +91,8 @@ onMounted(async () => {
   display: flex;
   height: 20%;
   flex-direction: column;
-  padding: 40px;
-  gap: $gap-big;
+  padding: 20px;
+  gap: $gap-normal;
   text-align: center;
   background: $gradient-main;
 
@@ -128,6 +128,7 @@ onMounted(async () => {
     &__title {
       font-size: $title-medium;
     }
+
     & .clock {
       font-size: $title-normal;
     }
@@ -141,17 +142,18 @@ onMounted(async () => {
   }
 }
 
-@media (max-height: $height-tabletop) {
-  .header {
-    padding: 20px;
-    gap: $gap-normal;
-  }
-}
-
-@media (max-height: $height-desktop) {
+@media (min-height: $height-desktop) {
   .header {
     padding: 30px;
     gap: $gap-medium;
   }
 }
+
+@media (min-height: $height-desktop-big) {
+  .header {
+    padding: 40px;
+    gap: $gap-big;
+  }
+}
+
 </style>

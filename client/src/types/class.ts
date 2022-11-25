@@ -21,7 +21,7 @@ interface DaySchedule {
 interface Lesson {
   _id: number,
   name: string,
-  kabinet: number,
   isTemp: boolean,
-  order: number
+  order: number,
+  tempName: string
 }

@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, toRefs, computed } from 'vue'
+import { onMounted, onUnmounted, ref, toRefs, computed, watch } from 'vue'
 import moment from "moment";
 import { DAY_OF_WEEK, TIME_LESSON } from "../consts";
-import { getDayDate, getLesson, getCurrentOrderLesson, installHeightCell } from "../helpers";
-import { useClassStore } from '../store/class'
+import { getDayDate, getCurrentOrderLesson, installHeightCell } from "../helpers";
+import { useClassStore } from '../store'
 import { useEvent } from '../hooks';
+import { LessonCell } from '../components'
+
+const tableRef = ref<null | HTMLTableElement>(null)
+const tableBodyRef = ref<null | HTMLTableElement>(null)
+const intervalId = ref<null | NodeJS.Timer>(null)
+const { currentClass, classes } = toRefs(useClassStore())
 
 // Текущий день недели, начиная с 1
 const dayOfWeek = ref(moment().isoWeekday())
-const tableRef = ref<null | HTMLTableElement>(null)
 
 // Текущий порядок урока, для обозначения активного урока
 const currentOrderLesson = ref(getCurrentOrderLesson(new Date()))
-
-const { currentClass } = toRefs(useClassStore())
-const intervalId = ref<null | NodeJS.Timer>(null)
-const tableBodyRef = ref<null | HTMLTableElement>(null)
 
 // Изменение высоты строк таблицы при изменении размеров экрана
 useEvent(window, 'resize', (e: Event) => {
@@ -66,6 +67,11 @@ const displayTimeLessons = computed(() => {
   return TIME_LESSON.slice(min - 1, max)
 })
 
+watch(classes, () => {
+  if (tableRef.value) {
+    installHeightCell(tableRef.value, displayTimeLessons.value.length + 1)
+  }
+})
 
 onMounted(() => {
   runTimeObserve()
@@ -96,8 +102,8 @@ onUnmounted(() => {
       </thead>
       <tbody ref="tableBodyRef">
         <!-- По min и max обрезаем массив -->
-        <tr class="row" v-for="(time, order) in displayTimeLessons" :key="order">
-          <!-- order - номер строки в таблице -->
+        <tr class="row" v-for="(time, rowIdx) in displayTimeLessons" :key="time.start.hour">
+          <!-- order - номер строки в tbody -->
           <!-- Первая cell в строке отображает время -->
           <td class="cell cell__time">
             <span>
@@ -111,14 +117,9 @@ onUnmounted(() => {
             </span>
           </td>
           <!-- dayOfWeekCell день недели -->
-          <td v-for="(day, dayOfWeekCell) in DAY_OF_WEEK" class="cell cell__lesson" :class="{
-            'cell--active': order + startAndEndOrderLesson.min == currentOrderLesson &&
-              dayOfWeekCell + 1 == dayOfWeek &&
-              currentClass && getLesson(currentClass, dayOfWeekCell + 1, startAndEndOrderLesson.min + order)
-          }" :key="dayOfWeekCell">
-            <!-- order + 1 -->
-            {{ currentClass && getLesson(currentClass, dayOfWeekCell + 1, startAndEndOrderLesson.min + order) }}
-          </td>
+          <LessonCell v-for="(day, dayOfWeekCell) in DAY_OF_WEEK" class="cell" :key="dayOfWeekCell" :rowIdx="rowIdx"
+            :min-order="startAndEndOrderLesson.min" :cell-day="dayOfWeekCell + 1" :current-order="currentOrderLesson"
+            :current-day="dayOfWeek" />
         </tr>
       </tbody>
     </table>
@@ -153,16 +154,6 @@ body {
   &__time {
     width: 80px;
     font-size: $text-normal;
-  }
-
-  &__lesson {
-    width: calc(100vw / 7 + 7px);
-    text-align: left;
-  }
-
-  &--active {
-    background-color: $cell-active-border;
-    color: $cell-active-text;
   }
 }
 

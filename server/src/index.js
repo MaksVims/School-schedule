@@ -2,6 +2,7 @@ const express = require('express')
 const config = require('config')
 const cookieParser = require('cookie-parser')
 const corsMiddleware = require('./middleware/corsMiddleware')
+const initFilenameSchedule = require('./helpers/initFilenameSchedule')
 
 const app = express()
 
@@ -18,7 +19,7 @@ const PORT = config.get('PORT') || 5000
 async function start() {
   try {
     require('./connections')
-
+    await initFilenameSchedule()
     app.listen(PORT, () => console.log(`Server run, port: ${PORT}`))
   } catch (e) {
     console.log(e);

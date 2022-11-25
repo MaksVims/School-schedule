@@ -1,8 +1,8 @@
 const path = require('path')
 const xlsxFile = require('read-excel-file/node')
 
-async function parseExcelFile(file) {
-  const pathExcelFile = path.resolve(__dirname, '..', '..', file.destination, file.filename)
+async function parseExcelFile(filename, isTemp) {
+  const pathExcelFile = path.resolve(__dirname, '..', '..', 'uploads', filename)
 
   // Получаем список таблиц
   const sheets = await xlsxFile.readSheetNames(pathExcelFile)
@@ -13,9 +13,9 @@ async function parseExcelFile(file) {
 
     // Данные таблицы класса
     const sheet = await xlsxFile(pathExcelFile, { sheet: sheetName })
-    
-    // Расписание конкретного класса - 7 дней
-    const schedule = new Array(7).fill(null).map((day, dayOfWeek) => ({
+  
+    // Расписание конкретного класса - 7 дней TODO!! 5 or 7
+    const schedule = new Array(5).fill("").map((day, dayOfWeek) => ({
       dayOfWeek: dayOfWeek + 1,
       lessons: []
     }))
@@ -24,10 +24,11 @@ async function parseExcelFile(file) {
       const order = Number(rows[0])
       rows.slice(2).forEach((lesson, dayOfWeek) => {
         const scheduleDay = schedule.find(day => day.dayOfWeek === dayOfWeek + 1)
-        scheduleDay.lessons.push({
-          name: lesson || '',
+        scheduleDay?.lessons.push({
+          name: !isTemp && lesson ? lesson : '',
           order,
-          isTemp: false
+          isTemp,
+          tempName: isTemp && lesson ? lesson : ''
         })
       })
     })

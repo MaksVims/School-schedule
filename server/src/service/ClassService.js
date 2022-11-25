@@ -34,7 +34,7 @@ class ClassService {
 
   // Создание класса по переданным данным
   static async createClass(course, number, schedule) {
-    let parent = await ClassService.getOne(course)
+    const parent = await ClassService.getOne(course)
     parent.children.push({ number, schedule })
     await parent.save()
     return parent

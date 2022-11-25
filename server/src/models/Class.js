@@ -13,7 +13,8 @@ const classSchema = new Schema({
               name: { type: String },
               // kabinet: { type: Number, required: true },
               isTemp: { type: Boolean, default: false },
-              order: { type: Number, required: true }
+              order: { type: Number, required: true },
+              tempName: { type: String, default: '' }
             }
           ]
         }

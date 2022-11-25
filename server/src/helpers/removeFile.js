@@ -2,8 +2,8 @@ const fs = require('fs')
 const path = require('path')
 
 // Синхронное удаление файла 
-function removeFile(file) {
-  fs.unlinkSync(path.resolve(__dirname, '..', '..', file.destination, file.filename))
+function removeFile(filename) {
+  fs.unlinkSync(path.resolve(__dirname, '..', '..', 'uploads', filename))
 }
 
 module.exports = removeFile

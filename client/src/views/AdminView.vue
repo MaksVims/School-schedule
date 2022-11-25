@@ -10,12 +10,18 @@ const file = ref<any>('')
 const isAuth = ref(true)
 const filePicker = ref<null | HTMLInputElement>(null)
 const isSuccess = ref(false)
+const isTempFile = ref(false)
 useTitle()
 
 const { fetch: loadFile, loading, error } = useFetch(async () => {
   const formData = new FormData()
   formData.append('file', file.value)
-  const response = await ClassService.loadSchedule(formData)
+  let response: null | {message: string}= null
+  if(isTempFile.value) {
+    response = await ClassService.loadTempSchedule(formData)
+  } else {
+    response =  await ClassService.loadSchedule(formData)
+  }
   if (response) {
     isSuccess.value = true
     setTimeout(() => {
@@ -68,10 +74,14 @@ watch(error, () => {
       <section class="content__container content">
         <div class="content__loadform">
           <div class="content__descriptions">
-            <p class="title__center">Выбрать excel файл для обновления расписания</p>
+            <p class="title__center">{{isTempFile ? 'Временное раписание' : 'Выбрать excel файл для обновления расписания'}}</p>
             <p class="title__center">расширение файла .xlsx</p>
           </div>
           <form @submit.prevent="" class="center form">
+            <label>
+              <span>Временное расписание</span>
+              <input type="checkbox" v-model="isTempFile">
+            </label>
             <input class="hidden" type="file" @change="changeFile" accept=".xlsx" ref="filePicker">
             <div :class="['dropzone', 'center', { 'dropzone--disable': isSuccess }]" @click="clickFilePicker">
               <Loader class="loader" v-if="loading" />
@@ -162,6 +172,10 @@ watch(error, () => {
   }
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+}
 .notation {
   position: absolute;
   left: 50%;
