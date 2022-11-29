@@ -62,10 +62,6 @@ watch(error, () => {
   }
 })
 
-watch(isMainFile, () => {
-  console.log(isMainFile.value);
-})
-
 </script>
 
 <template>

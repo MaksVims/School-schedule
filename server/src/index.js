@@ -3,6 +3,7 @@ const config = require('config')
 const cookieParser = require('cookie-parser')
 const corsMiddleware = require('./middleware/corsMiddleware')
 const initFilenameSchedule = require('./helpers/initFilenameSchedule')
+const ObserverTempLessons = require('./observers/ObserverTempLessons')
 
 const app = express()
 
@@ -20,7 +21,10 @@ async function start() {
   try {
     require('./connections')
     await initFilenameSchedule()
-    app.listen(PORT, () => console.log(`Server run, port: ${PORT}`))
+    app.listen(PORT, () => {
+      new ObserverTempLessons(5000)
+      console.log(`Server run, port: ${PORT}`)
+    })
   } catch (e) {
     console.log(e);
     process.exit(1)

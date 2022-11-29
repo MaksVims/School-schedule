@@ -27,19 +27,12 @@ class ClassService {
     return newCourse
   }
 
-  // Получение переданного курса
+  // Получение указанного курса
   static async getOne(course) {
     return await classModelMainDB.findOne({ course })
   }
 
-  // Создание класса по переданным данным
-  static async createClass(course, number, schedule) {
-    const parent = await ClassService.getOne(course)
-    parent.children.push({ number, schedule })
-    await parent.save()
-    return parent
-  }
-
+  // сохранение переданных данных в protector DB
   static async checkClassDataProtector(result) {
     return await Promise.all(result.map(async ({ course, children }) => {
       const newCourse = new classModelDataProtectorDB({ course, children })
@@ -48,6 +41,26 @@ class ClassService {
       return newCourse
     }))
   }
+
+  // обновление всех уроков по указанным дням weekDays
+  static async updateDataEveryLesson(callback, weekDays) {
+    const allClasses = await ClassService.getAll()
+
+    allClasses.forEach(course => {
+      course.children.forEach(learnClass => {
+        learnClass.schedule.forEach(({ dayOfWeek, lessons }) => {
+          if (weekDays.includes(dayOfWeek)) {
+            lessons.forEach(callback)
+          }
+        })
+      })
+    })
+
+    return await Promise.all(allClasses.map(async (course) => {
+      return await course.save()
+    }))
+  }
+
 }
 
 module.exports = ClassService

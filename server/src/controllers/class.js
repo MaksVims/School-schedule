@@ -1,10 +1,11 @@
 const ClassService = require('../service/ClassService')
-const parseExcelFile = require('../helpers/parseExcelFile')
-const removeFile = require('../helpers/removeFile')
-const formatData = require('../helpers/formatData')
+const DateService = require('../service/DateService')
 const emitter = require('../emitter')
 const { eventsName } = require('../consts/literals')
 const fileMainSchedule = require('../temp/fileMainSchedule')
+const parseExcelFile = require('../helpers/parseExcelFile')
+const removeFile = require('../helpers/removeFile')
+const formatData = require('../helpers/formatData')
 const getUpdatedTempCourse = require('../helpers/classService/getUpdatedTempCourse')
 const getCourse = require('../helpers/classService/getCourse')
 
@@ -37,10 +38,12 @@ class ClassController {
       // Создание моделей из во protector db, если ошибок не будет, обновится main db
       await ClassService.checkClassDataProtector(result)
 
+      //Удаляем дату последнего обновления
+      await DateService.removeDate()
+
       // Очистка main db от старых данных
       await ClassService.cleanClassesMain()
 
-      // TODO: получать данные из Promise.all
       // Создание моделей в main db
       const allClasses = await Promise.all(result.map(async ({ course, children }) => {
         return await ClassService.createCourse(course, children)
@@ -78,10 +81,17 @@ class ClassController {
       // Создание моделей из во protector db, если ошибок не будет, обновится main db
       await ClassService.checkClassDataProtector(updatedTempCourses)
 
+       //Обновить дату последнего обновления временного расписания
+      const lastUpdate = await DateService.getDate()
+
+      if(!lastUpdate) {
+        await DateService.createDate()
+      }
+      await DateService.updateDate()
+
       // Очистка main db от старых данных
       await ClassService.cleanClassesMain()
 
-      // TODO: получать данные из Promise.all
       // Создание моделей в main db
       const allClasses = await Promise.all(updatedTempCourses.map(async ({ course, children }) => {
         return await ClassService.createCourse(course, children)
