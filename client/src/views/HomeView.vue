@@ -92,7 +92,7 @@ onMounted(async () => {
   height: 20%;
   flex-direction: column;
   padding: 20px;
-  gap: $gap-normal;
+  gap: $gap-small;
   text-align: center;
   background: $gradient-main;
 
@@ -141,6 +141,13 @@ onMounted(async () => {
     overflow: auto;
   }
 }
+
+@media (min-height: $height-tabletop) {
+  .header {
+    gap: $gap-normal;
+  }
+}
+
 
 @media (min-height: $height-desktop) {
   .header {
