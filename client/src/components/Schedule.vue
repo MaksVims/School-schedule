@@ -43,10 +43,10 @@ const startAndEndOrderLesson = computed(() => {
     // Перебор всех уроков
     currentClass.value.schedule.forEach(dayLessons => {
       dayLessons.lessons.forEach(lesson => {
-        if (lesson.order < min) {
+        if (lesson.order < min && ((lesson.name && !lesson.isTemp) || (lesson.tempName && lesson.isTemp))) {
           min = lesson.order
         }
-        if (lesson.order > max) {
+        if (lesson.order > max && ((lesson.name && !lesson.isTemp) || (lesson.tempName && lesson.isTemp))) {
           max = lesson.order
         }
       })

@@ -67,19 +67,21 @@ class ClassController {
       const resultTemp = formatData(shuffleTempData)
 
       // чтение и форматирование данных из основного файла расписания
-      const shuffleMainData = await parseExcelFile(fileMainSchedule.filename, false)
-      const result = formatData(shuffleMainData)
+      // const shuffleMainData = await parseExcelFile(fileMainSchedule.filename, false)
+      // const result = formatData(shuffleMainData)
+
+      const mainData = await ClassService.getAll()
 
       // сравнение и аккумулирование данных двух файлов
-      const updatedTempCourses = resultTemp.map(tempCourse => {
-        return getUpdatedTempCourse(tempCourse, getCourse(result, tempCourse.course))
+      const updatedCourses = resultTemp.map(tempCourse => {
+        return getUpdatedTempCourse(tempCourse, getCourse(mainData, tempCourse.course))
       })
 
       // Очистка backup db от старых данных
       await ClassService.cleanClassesProtector()
 
       // Создание моделей из во protector db, если ошибок не будет, обновится main db
-      await ClassService.checkClassDataProtector(updatedTempCourses)
+      await ClassService.checkClassDataProtector(updatedCourses)
 
        //Обновить дату последнего обновления временного расписания
       const lastUpdate = await DateService.getDate()
@@ -90,15 +92,17 @@ class ClassController {
       await DateService.updateDate()
 
       // Очистка main db от старых данных
-      await ClassService.cleanClassesMain()
+      // await ClassService.cleanClassesMain()
 
       // Создание моделей в main db
-      const allClasses = await Promise.all(updatedTempCourses.map(async ({ course, children }) => {
-        return await ClassService.createCourse(course, children)
+      await Promise.all(updatedCourses.map(async (course) => {
+        return await course.save()
       }))
 
+      const allCourses = await ClassService.getAll()
+
       // let allClasses = await ClassService.getAll()
-      emitter.emit(eventsName.updateData, allClasses)
+      emitter.emit(eventsName.updateData, allCourses)
 
       res.status(200).json({ message: 'Успешно!' })
     } catch (e) {
