@@ -1,16 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# Онлайн расписание школы № 116
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Веб приложение по построенное по паттерну клиент + сервер предназначенное для отображения в реальном времени
+расписания уроков
 
-## Recommended IDE Setup
+## Сервер
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+На сервере используется nodejs, express, mongoose
+В качестве базы данных используется mongodb
 
-## Type Support For `.vue` Imports in TS
+Сервер используется как api для клиентской части и предназначен для предоставления данных расписания, а также обновления этих данных с помощью приема excel файлов выполненных в определенном формате, на котором основана работа бизнес логики сервера.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+Также сервер занимается авторизацией администратора сайта и выдачей в cookie jwt токена
+Обновление данных возможно только при наличии действительного jwt токена
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+Отслеживает время последнего обновления раписания
+Также сервер осуществляет поминутную проверку текущего дня недели и последнего обновления расписания, при различии, он переводит все уроки прошедшего дня в режим isTemp = false делая их постоянными, т.е убирает временные уроки прошедшего дня
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+## Клиент
+
+Клиент использует vue3, pinia, typescript, scss
+
+Предназначен для отображения данных расписания, а также для загрузки и его последующего обновления.
+Имеет основную страницу с таблицей, с который могут взаимодействовать учащиеся, присутсвуют элементы для выбора конкретного класса и т.д
+
+Таблица обладает автоматическим отслеживанием дня недели и текущего урока, который выделяется соответствующим цветом, также отображаются временные уроки с помощью спец символа и их ячейке, таблица обновляется в онлайн режиме без перезагрузки с помощью longpulling запросов на сервер, последний выбор сохраняется в local storage и повзоляет при перезагрузке выбрать последний выбранный класс
+
+Страница входа предназначена для входа администратора и получение им jwt токена, логин и пароль имеется в единственном экземпляре, при отправке неверных данных интерфейс отображает информацию, присутсвует блокировка отправки формы ввода при отсутствии введенных данных
+
+Панель администоратора, для загрузки основного расписания и его обновленных версий
+Для этого присутсвует специальный checkbox, который переключает загрузку основного расписания или его временных версий,
+требует авторизации и excel файла выполненного в опр формате, в противном случае интерфейс сообщит о проблеме
