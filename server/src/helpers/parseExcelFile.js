@@ -19,7 +19,7 @@ async function parseExcelFile(filename, isTemp) {
       dayOfWeek: dayOfWeek + 1,
       lessons: []
     }))
-
+    
     sheet.slice(1).forEach((rows) => {
       const order = Number(rows[0])
       rows.slice(2).forEach((lesson, dayOfWeek) => {

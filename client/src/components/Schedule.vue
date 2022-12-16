@@ -43,6 +43,8 @@ const startAndEndOrderLesson = computed(() => {
     // Перебор всех уроков
     currentClass.value.schedule.forEach(dayLessons => {
       dayLessons.lessons.forEach(lesson => {
+        // Ликвидирует отсутствие пустых строк
+        // Если временный и не пустой или постоянный не пустой
         if (lesson.order < min && ((lesson.name && !lesson.isTemp) || (lesson.tempName && lesson.isTemp))) {
           min = lesson.order
         }
