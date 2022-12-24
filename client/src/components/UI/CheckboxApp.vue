@@ -37,7 +37,9 @@ const clickBoxHandler = () => {
       <slot></slot>
     </span>
     <input type="checkbox" v-model="value" class="hidden checkbox" ref="checkboxRef" />
-    <div class="box"></div>
+    <div class="box">
+      <span></span>
+    </div>
   </label>
 </template>
 
@@ -50,6 +52,7 @@ const clickBoxHandler = () => {
   gap: $gap-normal;
   cursor: pointer;
 }
+
 .box {
   width: 25px;
   height: 25px;
@@ -57,20 +60,31 @@ const clickBoxHandler = () => {
   border: 1px solid black;
 }
 
-.checkbox {
-  &:checked+.box {
-    position: relative;
+.box {
+  position: relative;
+}
 
-    &::after {
-      content: '';
+.checkbox {
+  &+.box {
+    & span {
+      display: block;
       position: absolute;
       left: 50%;
       top: 50%;
       display: block;
       width: 70%;
       height: 70%;
-      transform: translate(-50%, -50%);
+      transform: translate(-52%, -52%);
       background-color: $darkblue;
+      transition: opacity .3s;
+      opacity: 0;
+    }
+  }
+
+  &:checked+.box {
+    & span {
+      transition: opacity .3s;
+      opacity: 1;
     }
   }
 }
