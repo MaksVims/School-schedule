@@ -3,7 +3,7 @@ import { ref, watch } from 'vue';
 import { ClassService } from '../api';
 import { SvgAddFile } from '../components/Svg'
 import { useFetch, useTitle } from '../hooks';
-import { CheckboxApp, Loader, TextError, TextSuccess } from '../components/UI'
+import { CheckboxApp, Loader, TextError, TextSuccess, PopupApp, ButtonApp } from '../components/UI'
 import { ERRORS, SITE_ROUTES } from '../consts'
 
 const file = ref<any>('')
@@ -12,6 +12,13 @@ const filePicker = ref<null | HTMLInputElement>(null)
 const isSuccess = ref(false)
 const isMainFile = ref(false)
 useTitle()
+
+const isShowSuccessPopup = ref(false)
+const showSuccessPopup = () => isShowSuccessPopup.value = true
+const closeSuccessPopup = () => {
+  filePicker.value!.value = ''
+  isShowSuccessPopup.value = false
+}
 
 const { fetch: loadFile, loading, error } = useFetch(async () => {
   const formData = new FormData()
@@ -31,13 +38,23 @@ const { fetch: loadFile, loading, error } = useFetch(async () => {
   }
 })
 
+const handleLoadMainFile = () => {
+  closeSuccessPopup()
+  loadFile()
+}
+
 const changeFile = (e: Event) => {
   const target = e.target as HTMLInputElement
   // При наличии файла сохраняем его как состояние и вызываем функцию отправки на сервер
 
   if (target.files?.length) {
     file.value = target.files[0]
-    loadFile()
+
+    if (!isMainFile.value) {
+      loadFile()
+    } else {
+      showSuccessPopup()
+    }
   }
 }
 
@@ -94,6 +111,15 @@ watch(error, () => {
           <TextError class="notation" v-else-if="error">Проверьте отправляемый файл!</TextError>
           <TextSuccess class="notation" v-else-if="isSuccess">Загрузка прошла успешно!</TextSuccess>
         </div>
+        <PopupApp :handle-close="closeSuccessPopup" :is-show="isShowSuccessPopup">
+          <div class="modal__content">
+            <h5>Загрузить документ как основное расписание?</h5>
+            <div class="modal__buttons">
+              <ButtonApp class="modal__btn" @click="handleLoadMainFile">Да</ButtonApp>
+              <ButtonApp class="modal__btn" @click="closeSuccessPopup">Нет</ButtonApp>
+            </div>
+          </div>
+        </PopupApp>
       </section>
     </main>
   </div>
@@ -135,6 +161,39 @@ watch(error, () => {
 
   &--disable {
     cursor: auto;
+  }
+}
+
+.modal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    padding: 20px 20px;
+    border-radius: $radius-normal;
+    background-color: white;
+    gap: $gap-medium;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__btn {
+    width: 130px;
+    background: $gradient-main;
+    border-radius: $radius-small;
+    color: $btn-formlogin-color;
+    transition: rotate .5s;
+
+    &:hover,
+    &:focus {
+      transition: rotate .5s;
+      transform: rotate(1deg);
+    }
   }
 }
 
