@@ -10,7 +10,7 @@ class DateService {
     return newDate
   }
 
-  static async getDate() {
+  static async getDateLastUpdate() {
     const date = await dateUpdateDB.findOne({})
     return date
   }

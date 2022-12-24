@@ -38,7 +38,7 @@ class ObserverTempLessons {
   observe(ms) {
     setInterval(async () => {
       try {
-        const dateLastUpdateDB = await DateService.getDate()
+        const dateLastUpdateDB = await DateService.getDateLastUpdate()
         if (dateLastUpdateDB) {
           const currentDate = moment()
           const dateLastUpdate = moment(dateLastUpdateDB.lastUpdate)
@@ -49,7 +49,9 @@ class ObserverTempLessons {
           if (diffDatesInDay > 0) {
             const weekDaysForRemove = this._getWeekDaysForRemove(dateLastUpdate, diffDatesInDay)
             const updatedDataClasses = await this._removeTempLessons(weekDaysForRemove)
-            await DateService.updateDate()
+            const dateLastUpdate = await DateService.updateDate()
+
+            emitter.emit(eventsName.updateDateLastUpdate, dateLastUpdate)
             emitter.emit(eventsName.updateData, updatedDataClasses)
           }
         }

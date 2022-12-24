@@ -104,7 +104,7 @@ onUnmounted(() => {
       </thead>
       <tbody ref="tableBodyRef">
         <!-- По min и max обрезаем массив -->
-        <tr class="row" v-for="(time, rowIdx) in displayTimeLessons" :key="time.start.hour">
+        <tr class="row" v-for="(time, rowIdx) in displayTimeLessons" :key="`${time.start.hour}:${time.start.min}`">
           <!-- order - номер строки в tbody -->
           <!-- Первая cell в строке отображает время -->
           <td class="cell cell__time">

@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import { ClassService } from "../api";
+import { onMounted, ref, toRefs } from "vue";
+import { ClassService, DateService } from "../api";
 import { SelectMenu, Schedule, Clock } from "../components";
 import { Loader, Snow } from '../components/UI'
 import { useFetch, useTitle, useEvent } from "../hooks";
-import { useClassStore } from "../store";
+import { useClassStore, useAppStore } from "../store";
+import { getFormatDate } from '../helpers'
 
 const { setClasses } = useClassStore();
+const { setLastUpdateDate } = useAppStore()
+const { lastUpdateDate } = toRefs(useAppStore())
 const homeRef = ref<null | HTMLDivElement>(null)
 
 useTitle()
@@ -36,6 +39,18 @@ const subscribeUpdateData = async () => {
   }
 }
 
+const subscribeUpdatedDateLastUpdate = async () => {
+  try {
+    const dateLastUpdate = await DateService.subscribeLastUpdateDate()
+    setLastUpdateDate(dateLastUpdate)
+    subscribeUpdatedDateLastUpdate()
+  } catch (e) {
+    setTimeout(() => {
+      subscribeUpdatedDateLastUpdate()
+    }, 500);
+  }
+}
+
 // Загружаем данные и подписываемся на автообновление
 const { fetch: fetchData, loading } = useFetch(async () => {
   const fetchData = await ClassService.getAll();
@@ -43,7 +58,15 @@ const { fetch: fetchData, loading } = useFetch(async () => {
   subscribeUpdateData()
 })
 
+// Получаем дату последнего обновления и подписываемся на автообновление
+const { fetch: fetchLastUpdateDate } = useFetch(async () => {
+  const fetchDate = await DateService.getLastUpdateDate()
+  setLastUpdateDate(fetchDate)
+  subscribeUpdatedDateLastUpdate()
+})
+
 onMounted(async () => {
+  fetchLastUpdateDate()
   fetchData()
 });
 
@@ -54,6 +77,10 @@ onMounted(async () => {
     <header class="header">
       <h1 class=" title header__title">Расписание уроков школы № 116</h1>
       <Snow />
+      <div class="header__lastUpdateDate lastUpdateDate" v-if="lastUpdateDate">
+        <p>Обновлено:</p>
+        <p>{{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}</p>
+      </div>
       <div class="header__clock">
         <Clock class="clock" />
       </div>
@@ -105,6 +132,16 @@ onMounted(async () => {
   &__title {
     font-size: $title-big;
     color: rgb(5, 5, 5);
+  }
+
+  &__lastUpdateDate {
+    position: absolute;
+    bottom: 15px;
+    right: 40px;
+    padding: 15px;
+    font-size: $text-small;
+    text-align: center;
+    color: #fff;
   }
 }
 
@@ -162,5 +199,4 @@ onMounted(async () => {
     gap: $gap-big;
   }
 }
-
 </style>

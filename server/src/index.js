@@ -13,7 +13,8 @@ app.use(express.json({ extends: true }))
 
 app.use('*', corsMiddleware)
 app.use('/api/class', require('./routes/class'))
-app.use('/auth', require('./routes/auth'))
+app.use('/api/date', require('./routes/date'))
+app.use('/api/auth', require('./routes/auth'))
 
 const PORT = config.get('PORT') || 5000
 

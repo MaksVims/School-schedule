@@ -15,7 +15,7 @@ class ClassController {
       let allClasses = await ClassService.getAll()
       res.status(200).json({ message: allClasses })
     } catch (e) {
-      console.log(e);
+      console.log(`ClassController: ${e}`);
       res.status(500).json({ message: 'Что-то пошло не так' })
     }
   }
@@ -55,7 +55,7 @@ class ClassController {
 
       res.status(200).json({ message: 'Успешно!' })
     } catch (e) {
-      console.log(e);
+      console.log(`ClassController: ${e}`);
       res.status(500).json({ message: 'Ошибка при загрузке файла' })
     }
   }
@@ -84,12 +84,12 @@ class ClassController {
       await ClassService.checkClassDataProtector(updatedCourses)
 
        //Обновить дату последнего обновления временного расписания
-      const lastUpdate = await DateService.getDate()
+      let dateLastUpdate = await DateService.getDateLastUpdate()
 
-      if(!lastUpdate) {
-        await DateService.createDate()
+      if(!dateLastUpdate) {
+        dateLastUpdate = await DateService.createDate()
       }
-      await DateService.updateDate()
+      dateLastUpdate = await DateService.updateDate()
 
       // Очистка main db от старых данных
       // await ClassService.cleanClassesMain()
@@ -103,10 +103,11 @@ class ClassController {
 
       // let allClasses = await ClassService.getAll()
       emitter.emit(eventsName.updateData, allCourses)
+      emitter.emit(eventsName.updateDateLastUpdate, dateLastUpdate)
 
       res.status(200).json({ message: 'Успешно!' })
     } catch (e) {
-      console.log(e);
+      console.log(`ClassController: ${e}`);
       res.status(500).json({ message: 'Ошибка при загрузке файла с временными данными' })
     } finally {
       removeFile(req.file.filename)
