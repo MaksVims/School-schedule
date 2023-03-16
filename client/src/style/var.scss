@@ -1,7 +1,9 @@
 // Common style
 // ----------- Color -------------
-$blue: #5cc7f1;
-$darkblue: #0850f2;
+// $main-light: #5cc7f1; 
+// $main: #0850f2;
+$main-light: #f0ff1b; 
+$main: #03940f; 
 $title-color: black;
 $text-color: rgb(46, 46, 46);
 $text-error-color: red;
@@ -27,12 +29,12 @@ $btn-formlogin-disable-bg: darkgrey;
 $btn-select-popup-border: lightgray;
 $btn-select-popup-state-border: darkgray;
 
-$btn-select-menu-color: #0850f2;
+$btn-select-menu-color: $main;
 $btn-select-menu-bg: white;
 
 // cell
 $cell-border: gray;
-$cell-active-border: #0850f2;
+$cell-active-border: $main;
 $cell-active-text: white;
 
 //loader
@@ -43,8 +45,8 @@ $loader-admin: #5cc7f1;
 $icon-loadfile: #1c8d2b;
 
 //gradient
-$gradient-main: linear-gradient(90deg, $darkblue 0%, $blue 50%, $darkblue 100%);
-$gradient-secondary: radial-gradient(circle,  $darkblue 0%, $blue 50%, $darkblue 100%);;
+$gradient-main: linear-gradient(90deg, $main 0%, $main-light 50%, $main 100%);
+$gradient-secondary: radial-gradient(circle,  $main 0%, $main-light 50%, $main 100%);;
 
 
 // ----------- Font-Size -------------

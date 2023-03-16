@@ -107,7 +107,7 @@ watch([login, password], () => {
 
   &__input {
     &:focus {
-      border: 1px solid $blue;
+      border: 1px solid $main-light;
     }
   }
 

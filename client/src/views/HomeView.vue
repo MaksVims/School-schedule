@@ -5,7 +5,7 @@ import { SelectMenu, Schedule, Clock } from "../components";
 import { Loader, Snow } from '../components/UI'
 import { useFetch, useTitle, useEvent } from "../hooks";
 import { useClassStore, useAppStore } from "../store";
-import { getFormatDate } from '../helpers'
+import { getFormatDate,getFormatDateHourAndMinute } from '../helpers'
 
 const { setClasses } = useClassStore();
 const { setLastUpdateDate } = useAppStore()
@@ -76,10 +76,11 @@ onMounted(async () => {
   <div v-if="!loading" class="home" ref="homeRef">
     <header class="header">
       <h1 class=" title header__title">Расписание уроков школы № 116</h1>
-      <Snow />
+      <!-- <Snow /> -->
       <div class="header__lastUpdateDate lastUpdateDate" v-if="lastUpdateDate">
         <p>Обновлено:</p>
         <p>{{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}</p>
+        <p>{{ getFormatDateHourAndMinute(new Date(lastUpdateDate.lastUpdate)) }}</p>
       </div>
       <div class="header__clock">
         <Clock class="clock" />

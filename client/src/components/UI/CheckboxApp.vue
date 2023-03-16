@@ -54,28 +54,25 @@ const clickBoxHandler = () => {
 }
 
 .box {
-  width: 25px;
-  height: 25px;
+  width: 26px;
+  height: 26px;
   cursor: pointer;
   border: 1px solid black;
 }
 
 .box {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkbox {
   &+.box {
     & span {
       display: block;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      display: block;
-      width: 70%;
-      height: 70%;
-      transform: translate(-52%, -52%);
-      background-color: $darkblue;
+      width: 16px;
+      height: 16px;
+      background-color: $main;
       transition: opacity .3s;
       opacity: 0;
     }
