@@ -8,8 +8,8 @@ import { router } from '../router'
 import { SITE_ROUTES } from '../consts'
 import { useAuth } from '../store'
 
-const login = ref("school_admin_116");
-const password = ref("Sch-116");
+const login = ref("");
+const password = ref("");
 const { setAuth } = useAuth()
 useTitle()
 
