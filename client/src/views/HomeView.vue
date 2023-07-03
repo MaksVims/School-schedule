@@ -77,13 +77,16 @@ onMounted(async () => {
     <header class="header">
       <h1 class=" title header__title">Расписание уроков школы № 116</h1>
       <!-- <Snow /> -->
-      <div class="header__lastUpdateDate lastUpdateDate" v-if="lastUpdateDate">
-        <p>Обновлено:</p>
-        <p>{{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}</p>
-        <p>{{ getFormatDateHourAndMinute(new Date(lastUpdateDate.lastUpdate)) }}</p>
-      </div>
+      
       <div class="header__clock">
         <Clock class="clock" />
+        <div class="header__lastUpdateDate lastUpdateDate" v-if="lastUpdateDate">
+          <p>Обновлено:</p>
+          <p>
+            {{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}
+            {{ getFormatDateHourAndMinute(new Date(lastUpdateDate.lastUpdate)) }}
+          </p>
+        </div>
       </div>
       <SelectMenu />
     </header>
@@ -126,6 +129,8 @@ onMounted(async () => {
 
   &__clock {
     position: absolute;
+    display: flex;
+    flex-direction: column;
     right: 30px;
     top: 30px;
   }
@@ -136,10 +141,10 @@ onMounted(async () => {
   }
 
   &__lastUpdateDate {
-    position: absolute;
     bottom: 15px;
     right: 40px;
     padding: 15px;
+    padding-top: 10px;
     font-size: $text-small;
     text-align: center;
     color: #fff;

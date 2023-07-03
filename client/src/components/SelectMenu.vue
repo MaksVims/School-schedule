@@ -115,4 +115,11 @@ const handleSetSelectNumberClass = (value: string) => {
   border-radius: $radius-normal;
   background-color: white;
 }
+
+@media (min-height: $height-desktop-big)  {
+  .menu-btn {
+    padding: 20px 60px;
+  }
+}
 </style>
+
