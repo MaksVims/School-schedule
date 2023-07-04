@@ -1,11 +1,12 @@
+import { SERVER_IP } from "../consts"
 
 export const routesClasses = {
-  getAll: 'http://localhost:5000/api/class',
-  authenticate: 'http://localhost:5000/api/auth/login',
-  checkAccess: 'http://localhost:5000/api/auth/checkAccess',
-  loadData: 'http://localhost:5000/api/class/loadData',
-  loadTempData: 'http://localhost:5000/api/class/loadTempData',
-  updateData: 'http://localhost:5000/api/class/updateData',
-  dateLastUpdate: 'http://localhost:5000/api/date/dateLastUpdate',
-  updateDateLastUpdate: 'http://localhost:5000/api/date/updateDateLastUpdate'
+  getAll: `http://${SERVER_IP}/api/class`,
+  authenticate: `http://${SERVER_IP}/api/auth/login`,
+  checkAccess: `http://${SERVER_IP}/api/auth/checkAccess`,
+  loadData: `http://${SERVER_IP}/api/class/loadData`,
+  loadTempData: `http://${SERVER_IP}/api/class/loadTempData`,
+  updateData: `http://${SERVER_IP}/api/class/updateData`,
+  dateLastUpdate: `http://${SERVER_IP}/api/date/dateLastUpdate`,
+  updateDateLastUpdate: `http://${SERVER_IP}/api/date/updateDateLastUpdate`
 }
