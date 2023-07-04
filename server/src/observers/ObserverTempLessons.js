@@ -49,9 +49,9 @@ class ObserverTempLessons {
           if (diffDatesInDay > 0) {
             const weekDaysForRemove = this._getWeekDaysForRemove(dateLastUpdate, diffDatesInDay)
             const updatedDataClasses = await this._removeTempLessons(weekDaysForRemove)
-            const dateLastUpdate = await DateService.updateDate()
+            const updatedLastDate = await DateService.updateDate()
 
-            emitter.emit(eventsName.updateDateLastUpdate, dateLastUpdate)
+            emitter.emit(eventsName.updateDateLastUpdate, updatedLastDate)
             emitter.emit(eventsName.updateData, updatedDataClasses)
           }
         }

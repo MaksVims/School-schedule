@@ -10,7 +10,7 @@ const initFilenameSchedule = async () => {
     const files = await readdir(dir)
     fileMainSchedule.filename = files[0]
   } catch (e) {
-    res.status(500).json({ message: 'Проблема на сервере' })
+    new Error('Нет файла основного расписания')
   }
 }
 
