@@ -5,8 +5,12 @@ import { useFetch } from '../hooks'
 import { AuthService } from "../api";
 
 const { fetch: fetchAccess } = useFetch<boolean>(async () => {
-  const isAccess = await AuthService.checkAccess()
-  return isAccess
+  if(document.cookie.includes('token')) {
+    const token = document.cookie.slice(6)
+    const isAccess = await AuthService.checkAccess(token)
+    return isAccess
+  }
+  return false
 })
 
 const routes = [

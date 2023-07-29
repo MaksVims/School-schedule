@@ -20,6 +20,8 @@ const {
 } = useFetch(async () => {
   const { token } = await AuthService.login(login.value, password.value);
   if (token) {
+    const tokenCookie = `token=${token}; Max-Age=${86400 * 30}; Path=/;`
+    document.cookie = tokenCookie
     setAuth(true)
     router.push(SITE_ROUTES.adminPanel)
   }

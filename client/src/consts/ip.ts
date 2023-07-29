@@ -1,1 +1,1 @@
-export const SERVER_IP = '*******:5000'
+export const SERVER_IP = '****:5000'

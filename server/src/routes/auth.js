@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const route = new Router()
 
-route.get('/checkAccess', authMiddleware, AuthController.checkAccess)
+route.post('/checkAccess', authMiddleware, AuthController.checkAccess)
 route.post('/login', AuthController.login)
 
 module.exports = route

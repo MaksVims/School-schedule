@@ -8,7 +8,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const token = req.cookies.token
+    const { token } = req.body
 
     if (!token) {
       return res.status(403).json({message: 'Вы не можете осуществить данную операцию, посольку не являетесь администратором'})
