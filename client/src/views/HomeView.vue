@@ -5,7 +5,7 @@ import { SelectMenu, Schedule, Clock } from "../components";
 import { Loader, Snow, ButtonApp } from '../components/UI'
 import { useFetch, useTitle, useEvent } from "../hooks";
 import { useClassStore, useAppStore } from "../store";
-import { getFormatDate,getFormatDateHourAndMinute } from '../helpers'
+import { getFormatDate, getFormatDateHourAndMinute } from '../helpers'
 import { RouterLink } from "vue-router";
 
 const { setClasses } = useClassStore();
@@ -77,9 +77,8 @@ onMounted(async () => {
   <div v-if="!loading" class="home" ref="homeRef">
     <header class="header">
       <h1 class=" title header__title">Расписание уроков школы № 116</h1>
-      <RouterLink to="/login">Логин</RouterLink>
       <!-- <Snow /> -->
-      
+
       <div class="header__clock">
         <Clock class="clock" />
         <div class="header__lastUpdateDate lastUpdateDate" v-if="lastUpdateDate">
