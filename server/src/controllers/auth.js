@@ -19,7 +19,7 @@ class AuthController {
       )
       res.cookie('token', token, {
         maxAge: 3600 * 24 * 1000,
-        httpOnly: true,
+        // httpOnly: true,
         sameSite: 'none',
         secure: true
       })

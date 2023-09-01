@@ -83,10 +83,10 @@ class ClassController {
       // Создание моделей из во protector db, если ошибок не будет, обновится main db
       await ClassService.checkClassDataProtector(updatedCourses)
 
-       //Обновить дату последнего обновления временного расписания
+      //Обновить дату последнего обновления временного расписания
       let dateLastUpdate = await DateService.getDateLastUpdate()
 
-      if(!dateLastUpdate) {
+      if (!dateLastUpdate) {
         dateLastUpdate = await DateService.createDate()
       }
       dateLastUpdate = await DateService.updateDate()

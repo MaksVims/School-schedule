@@ -3,11 +3,11 @@ import { HomeView, LoginView, AdminView } from '../views'
 import { SITE_ROUTES } from '../consts'
 import { useFetch } from '../hooks'
 import { AuthService } from "../api";
+import { getToken } from '../helpers'
 
 const { fetch: fetchAccess } = useFetch<boolean>(async () => {
-  if(document.cookie.includes('token')) {
-    const token = document.cookie.slice(6)
-    const isAccess = await AuthService.checkAccess(token)
+  if (document.cookie.includes('token')) {
+    const isAccess = await AuthService.checkAccess(getToken())
     return isAccess
   }
   return false

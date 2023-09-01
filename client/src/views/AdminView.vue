@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { ClassService } from '../api';
+import { ClassService, AuthService } from '../api';
 import { SvgAddFile } from '../components/Svg'
 import { useFetch, useTitle } from '../hooks';
 import { CheckboxApp, Loader, TextError, TextSuccess, PopupApp, ButtonApp } from '../components/UI'
 import { ERRORS, SITE_ROUTES } from '../consts'
+import { getToken } from '../helpers';
 
 const file = ref<any>('')
 const isAuth = ref(true)
@@ -24,17 +25,20 @@ const { fetch: loadFile, loading, error } = useFetch(async () => {
   const formData = new FormData()
   formData.append('file', file.value)
   let response: null | { message: string } = null
-  if (isMainFile.value) {
-    response = await ClassService.loadSchedule(formData)
-  } else {
-    response = await ClassService.loadTempSchedule(formData)
-  }
-  if (response) {
-    isSuccess.value = true
-    setTimeout(() => {
-      isSuccess.value = false
-      filePicker.value!.value = ''
-    }, 5000);
+
+  if (await AuthService.checkAccess(getToken())) {
+    if (isMainFile.value) {
+      response = await ClassService.loadSchedule(formData)
+    } else {
+      response = await ClassService.loadTempSchedule(formData)
+    }
+    if (response) {
+      isSuccess.value = true
+      setTimeout(() => {
+        isSuccess.value = false
+        filePicker.value!.value = ''
+      }, 5000);
+    }
   }
 })
 
