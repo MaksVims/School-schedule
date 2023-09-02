@@ -15,7 +15,12 @@ const { items } = toRefs(props);
 <template>
   <div class="wrapper center">
     <div class="list" v-if="items.length">
-      <ButtonApp class="list__btn center" v-for="item in items" :key="item" @pointerdown="() => handleClick(item)">
+      <ButtonApp
+        class="list__btn center"
+        v-for="item in items"
+        :key="item"
+        @pointerdown="() => handleClick(item)"
+      >
         {{ item }}
       </ButtonApp>
     </div>
@@ -24,7 +29,7 @@ const { items } = toRefs(props);
 </template>
 
 <style scoped lang="scss">
-@import '@/style/var.scss';
+@import "@/style/var.scss";
 
 .wrapper {
   width: 100%;
@@ -40,11 +45,11 @@ const { items } = toRefs(props);
 
   &__btn {
     flex-grow: 0;
-    width: 13%;
+    width: 90px;
     transition: border 0.1s;
     padding: 20px;
     border: 2px solid $btn-select-popup-border;
-    font-size: $text-big;
+    font-size: $text-veryBig;
 
     &:hover,
     &:active,

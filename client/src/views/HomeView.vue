@@ -203,7 +203,7 @@ onMounted(async () => {
 @media (min-height: $height-desktop-big) {
   .header {
     padding: 40px;
-    gap: $gap-big;
+    gap: $gap-medium;
   }
 }
 </style>

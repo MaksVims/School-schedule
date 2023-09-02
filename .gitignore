@@ -8,3 +8,4 @@
 /client/.vscode
 /client/yarn.lock
 /client/package-lock.json
+node_modules

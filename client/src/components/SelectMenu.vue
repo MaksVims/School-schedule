@@ -22,59 +22,79 @@ const showCourseClass = () => (isShowCourseClasses.value = true);
 const showNumberClass = () => (isShowNumberClasses.value = true);
 
 // Получаем данные из локального хранилища
-const storageSelectCourse = useLocalStorage('currentCourse')
-const storageSelectNumber = useLocalStorage('currentNumber')
+const storageSelectCourse = useLocalStorage("currentCourse");
+const storageSelectNumber = useLocalStorage("currentNumber");
 
 onMounted(() => {
   // Установка данных о выбранном курсе и номере из localStorage в state
   if (coursesClasses.value.includes(storageSelectCourse.value)) {
-    setSelectCourseClass(storageSelectCourse.value)
-  } if (numbersClasses.value.includes(storageSelectNumber.value)) {
-    setSelectNumberClass(storageSelectNumber.value)
+    setSelectCourseClass(storageSelectCourse.value);
   }
-})
+  if (numbersClasses.value.includes(storageSelectNumber.value)) {
+    setSelectNumberClass(storageSelectNumber.value);
+  }
+});
 
 const handleSetSelectCourseClass = (value: string) => {
   hideCourseClass();
   setSelectCourseClass(value);
-  storageSelectCourse.value = value
-  showNumberClass()
+  storageSelectCourse.value = value;
+  showNumberClass();
 };
 
 const handleSetSelectNumberClass = (value: string) => {
   hideNumberClass();
   setSelectNumberClass(value);
-  storageSelectNumber.value = value
+  storageSelectNumber.value = value;
 };
-
 </script>
 
 <template>
   <div class="select-menu">
-    <ButtonApp class="menu-btn" @pointerdown="showCourseClass">
+    <ButtonApp class="menu-btn" @click="showCourseClass">
       {{
-          !selectedCourseClass ? "Выбрать класс" : `Класс ${selectedCourseClass}`
+        !selectedCourseClass ? "Выбрать класс" : `Класс ${selectedCourseClass}`
       }}
     </ButtonApp>
-    <ButtonApp class="menu-btn" @pointerdown="showNumberClass">
+    <ButtonApp class="menu-btn" @click="showNumberClass">
       {{
-          !selectedNumberClass ? "Выбрать номер" : `Номер ${selectedNumberClass}`
+        !selectedNumberClass ? "Выбрать номер" : `Номер ${selectedNumberClass}`
       }}
     </ButtonApp>
 
-    <PopupApp :handleClose="hideCourseClass" :isShow="isShowCourseClasses">
-      <div class="modal__content">
-        <ListVariants class="modal__content center" :items="coursesClasses.filter(c => c != selectedCourseClass)"
-          :handleClick="handleSetSelectCourseClass" />
+    <a-modal
+      v-model:open="isShowCourseClasses"
+      @ok="hideCourseClass"
+      centered
+      :footer="null"
+      width="700px"
+    >
+      <div class="modal__content center">
+        <h2>Выбери класс</h2>
+        <ListVariants
+          class="modal__content center"
+          :items="coursesClasses.filter((c) => c != selectedCourseClass)"
+          :handleClick="handleSetSelectCourseClass"
+        />
       </div>
-    </PopupApp>
+    </a-modal>
 
-    <PopupApp :handleClose="hideNumberClass" :isShow="isShowNumberClasses">
-      <div class="modal__content">
-        <h2>Номер класса</h2>
-        <ListVariants class="modal__content center" :items="numbersClasses" :handleClick="handleSetSelectNumberClass" />
+    <a-modal
+      v-model:open="isShowNumberClasses"
+      @ok="hideNumberClass"
+      centered
+      :footer="null"
+      width="700px"
+    >
+      <div class="modal__content center">
+        <h2>Выбери номер</h2>
+        <ListVariants
+          class="modal__content center"
+          :items="numbersClasses"
+          :handleClick="handleSetSelectNumberClass"
+        />
       </div>
-    </PopupApp>
+    </a-modal>
   </div>
 </template>
 
@@ -85,7 +105,7 @@ const handleSetSelectNumberClass = (value: string) => {
   position: relative;
   display: flex;
   justify-content: center;
-  gap: $gap-big;
+  gap: $gap-xxs;
   z-index: 10;
 }
 
@@ -109,14 +129,12 @@ const handleSetSelectNumberClass = (value: string) => {
   display: flex;
   flex-direction: column;
   text-align: center;
-  width: 700px;
   min-height: 400px;
-  padding: 40px 20px;
-  border-radius: $radius-normal;
+  padding: 20px 20px;
   background-color: white;
 }
 
-@media (min-height: $height-desktop-big)  {
+@media (min-height: $height-desktop-big) {
   .menu-btn {
     padding: 20px 60px;
   }
