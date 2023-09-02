@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory, RouteLocationNormalized } from "vue-router";
-import { HomeView, LoginView, AdminView } from '../views'
+import { HomeView, LoginView, AdminView, MobileViewHome } from '../views'
 import { SITE_ROUTES } from '../consts'
 import { useFetch } from '../hooks'
 import { AuthService } from "../api";
 import { getToken } from '../helpers'
+import MobileDetect from "mobile-detect";
+
+
+const detect = new MobileDetect(window.navigator.userAgent)
+const isMobile = detect.mobile()
 
 const { fetch: fetchAccess } = useFetch<boolean>(async () => {
   if (document.cookie.includes('token')) {
@@ -13,16 +18,21 @@ const { fetch: fetchAccess } = useFetch<boolean>(async () => {
   return false
 })
 
+
 const routes = [
   {
     path: SITE_ROUTES.home,
     name: 'Main',
-    component: HomeView,
+    component: isMobile ? MobileViewHome : HomeView,
   },
   {
     path: SITE_ROUTES.login,
     component: LoginView,
     beforeEnter: async () => {
+      if (isMobile) {
+        router.push(SITE_ROUTES.home)
+      }
+
       const isAccess = await fetchAccess()
       if (isAccess) {
         router.push(SITE_ROUTES.adminPanel)
@@ -33,6 +43,10 @@ const routes = [
     path: SITE_ROUTES.adminPanel,
     component: AdminView,
     beforeEnter: async () => {
+      if (isMobile) {
+        router.push(SITE_ROUTES.home)
+      }
+
       const isAccess = await fetchAccess()
       if (!isAccess) {
         router.push(SITE_ROUTES.login)
