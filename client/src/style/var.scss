@@ -1,19 +1,25 @@
 // Common style
 // ----------- Color -------------
+$green: #1c8d2b;
+$accent: #1c8d2b; // основной цвет кнопок
+$accent-light: #1dd836; // различные hover эффекты
+// winter
 // $main-light: #5cc7f1; 
-// $main: #0850f2;
-$main-light: #f0ff1b;
-$main: #03940f;
+// $accent: #0850f2;
+
+// summer
+$main-light: #f0ff1b; // цвет градиента
+$main: $accent; 
 $title-color: black;
 $text-color: rgb(46, 46, 46);
 $text-error-color: red;
-$text-success-color: green;
+$text-success-color: $green;
 
 // Popup
 $bg-popup: rgba(0, 0, 0, .6);
 
 // Input
-$border-input: #9aa7ac;
+$border: #9aa7ac;
 
 // bg
 $bg-wrapper: rgb(228, 228, 228);
@@ -22,8 +28,8 @@ $bg-wrapper: rgb(228, 228, 228);
 $btn-admin-dark: rgb(46, 46, 46);
 
 $btn-formlogin-color: white;
-$btn-formlogin-bg: #1dd836;
-$btn-formlogin-hover-bg: #1c8d2b;
+$btn-formlogin-bg: $accent-light;
+$btn-formlogin-hover-bg: $accent;
 $btn-formlogin-disable-bg: darkgrey;
 
 $btn-select-popup-border: lightgray;
@@ -42,7 +48,7 @@ $loader-home: #5cc7f1;
 $loader-admin: #5cc7f1;
 
 //icon 
-$icon-loadfile: #1c8d2b;
+$icon-loadfile: $green;
 
 //gradient
 $gradient-main: linear-gradient(90deg, $main 0%, $main-light 50%, $main 100%);

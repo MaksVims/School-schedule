@@ -12,7 +12,9 @@
 
 html,
 body,
-#app {
+#app,
+p,
+span {
   font-size: $text-normal;
   font-weight: 400;
   color: $text-color;
@@ -31,6 +33,12 @@ h2,
 h3 {
   font-size: $subtitle-normal;
   font-weight: 700;
+}
+
+h4,
+h5,
+h6 {
+  font-size: $subtitle-small;
 }
 
 h1,
@@ -92,17 +100,17 @@ svg {
 // input antdesign options
 .ant-input-affix-wrapper.ant-input-password,
 .ant-input {
-  border: 1px solid $border-input;
+  border: 1px solid $border;
   border-radius: 0px;
   padding: 5px 15px;
 
   &:hover {
-    border: 1px solid $main-light;
+    border: 1px solid $accent-light;
     box-shadow: none !important;
   }
 
   &:focus {
-    border: 1px solid $main-light;
+    border: 1px solid $accent-light;
     box-shadow: none !important;
   }
 }
@@ -113,5 +121,5 @@ svg {
 
 .ant-input-affix-wrapper-focused {
   box-shadow: none !important;
-  border: 1px solid $main-light !important;
+  border: 1px solid $accent-light !important;
 }

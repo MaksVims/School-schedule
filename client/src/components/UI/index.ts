@@ -1,6 +1,5 @@
 export {default as PopupApp } from './PopupApp.vue'
 export {default as ButtonApp } from './ButtonApp.vue'
-export {default as InputApp } from './InputApp.vue'
 export {default as Loader } from './Loader.vue'
 export {default as TextError } from './TextError.vue'
 export {default as TextSuccess } from './TextSuccess.vue'
