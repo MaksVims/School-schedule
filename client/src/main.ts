@@ -10,17 +10,14 @@ import 'ant-design-vue/dist/reset.css';
 const app = createApp(App)
 const pinia = createPinia()
 
-app.use(pinia)
+const AntDesignComponents = [
+  Modal, Input, Switch,  Space, Row, Col, Button, Layout, LayoutHeader, LayoutContent, ConfigProvider
+]
+
+AntDesignComponents.forEach(component => {
+  app.use(component)
+})
+
 app.use(router)
-app.use(Modal)
-app.use(Input)
-app.use(Switch)
-app.use(Space)
-app.use(Row)
-app.use(Col)
-app.use(Button)
-app.use(Layout)
-app.use(LayoutHeader)
-app.use(LayoutContent)
-app.use(ConfigProvider)
+app.use(pinia)
 app.mount('#app')
