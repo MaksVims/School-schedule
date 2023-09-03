@@ -117,10 +117,10 @@ watch(error, () => {
             <p class="title__center">расширение файла .xlsx</p>
           </div>
           <form @submit.prevent="" class="center form">
-            <a-space size="middle" align="center">
-              <span>Основное расписание</span>
+            <div class="switch">
+              <span class="switch__title">Основное расписание</span>
               <a-switch v-model:checked="isMainFile" />
-            </a-space>
+            </div>
             <input
               class="hidden"
               type="file"
@@ -175,10 +175,16 @@ watch(error, () => {
           <a-space class="modal__content" direction="vertical" :size="30">
             <h5>Загрузить документ как основное расписание?</h5>
             <a-row :gutter="[16, 16]" justify="space-between">
-              <a-button class="modal__btn" size="large" @click="handleLoadMainFile"
+              <a-button
+                class="modal__btn"
+                size="large"
+                @click="handleLoadMainFile"
                 >Да</a-button
               >
-              <a-button class="modal__btn" size="large" @click="closeSuccessPopup"
+              <a-button
+                class="modal__btn"
+                size="large"
+                @click="closeSuccessPopup"
                 >Нет</a-button
               >
             </a-row>
@@ -214,6 +220,16 @@ watch(error, () => {
     right: 30px;
     top: 20px;
   }
+}
+
+.switch {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: $gap-small;
+}
+.switch__title {
+  font-size: $title-xxs;
 }
 
 .dropzone {
@@ -331,6 +347,9 @@ watch(error, () => {
 }
 
 @media (max-width: $mobile-small) {
+  .modal__btn {
+    width: 100px;
+  }
   .content {
     &__container {
       min-width: auto;
