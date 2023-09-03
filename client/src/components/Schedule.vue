@@ -158,10 +158,6 @@ onUnmounted(() => {
 <style scoped lang="scss">
 @import "@/style/var.scss";
 
-body {
-  overflow-x: auto;
-}
-
 .schedule {
   overflow-x: auto;
   width: 100%;
@@ -183,22 +179,29 @@ body {
   font-size: $text-big;
 
   &__time {
-    width: 80px;
-    font-size: $text-normal;
+    width: 100px;
   }
 }
 
 .cell:first-child {
-  max-width: 100px;
+  max-width: 120px;
 }
 
 th.cell:first-child {
-  min-width: 100px;
+  min-width: 120px;
 }
 
 @media (max-width: $desktop) {
   .cell {
     font-size: $text-normal;
+  }
+
+  .cell:first-child {
+    max-width: 100px;
+  }
+
+  th.cell:first-child {
+    min-width: 100px;
   }
 }
 </style>

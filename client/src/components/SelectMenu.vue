@@ -50,17 +50,26 @@ const handleSetSelectNumberClass = (value: string) => {
 </script>
 
 <template>
-  <div class="select-menu">
-    <ButtonApp class="menu-btn" @click="showCourseClass">
-      {{
-        !selectedCourseClass ? "Выбрать класс" : `Класс ${selectedCourseClass}`
-      }}
-    </ButtonApp>
-    <ButtonApp class="menu-btn" @click="showNumberClass">
-      {{
-        !selectedNumberClass ? "Выбрать номер" : `Номер ${selectedNumberClass}`
-      }}
-    </ButtonApp>
+  <a-row justify="center" class="select-menu">
+    <a-button class="menu-btn" @click="showCourseClass">
+      <span>
+        {{
+          !selectedCourseClass
+            ? "Выбрать класс"
+            : `Класс ${selectedCourseClass}`
+        }}
+      </span>
+    </a-button>
+
+    <a-button class="menu-btn" @click="showNumberClass">
+      <span>
+        {{
+          !selectedNumberClass
+            ? "Выбрать номер"
+            : `Номер ${selectedNumberClass}`
+        }}
+      </span>
+    </a-button>
 
     <a-modal
       v-model:open="isShowCourseClasses"
@@ -95,7 +104,7 @@ const handleSetSelectNumberClass = (value: string) => {
         />
       </div>
     </a-modal>
-  </div>
+  </a-row>
 </template>
 
 <style scoped lang="scss">
@@ -103,25 +112,24 @@ const handleSetSelectNumberClass = (value: string) => {
 
 .select-menu {
   position: relative;
-  display: flex;
-  justify-content: center;
   gap: $gap-xxl;
   z-index: 10;
 }
 
 .menu-btn {
-  transition: box-shadow linear 0.3s;
   border-radius: $radius-normal;
-  font-size: $text-big;
   background: $btn-select-menu-bg;
   color: $btn-select-menu-color;
-  background: $btn-select-menu-bg;
-  padding: 10px 60px;
+  width: 250px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &:active,
-  &:hover {
-    transition: box-shadow linear 0.3s;
-    box-shadow: 1px 2px 4px rgba($color: #000000, $alpha: 0.4);
+  span {
+    color: $accent;
+    font-size: $text-veryBig;
+    font-weight: 700;
   }
 }
 
@@ -136,7 +144,13 @@ const handleSetSelectNumberClass = (value: string) => {
 
 @media (min-height: $height-desktop-big) {
   .menu-btn {
-    padding: 20px 60px;
+    padding: 0px 80px;
+  }
+}
+
+@media (max-width: $tabletop) {
+  .menu-btn span {
+    font-size: 28px;
   }
 }
 </style>

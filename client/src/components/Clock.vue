@@ -30,6 +30,8 @@ onUnmounted(() => {
 <style scoped lang="scss">
 @import "@/style/var.scss";
 .clock span {
+  max-width: 250px;
+  min-width: 190px;
   display: block;
   padding: 15px;
   border: 1px solid white;
@@ -40,6 +42,12 @@ onUnmounted(() => {
 @media (max-width: 1600px) {
   .clock span {
     font-size: $text-veryBig;
+  }
+}
+
+@media (min-width: 2000px) {
+  .clock span {
+    font-size: $text-overSize;
   }
 }
 </style>

@@ -118,7 +118,7 @@ watch(error, () => {
           </div>
           <form @submit.prevent="" class="center form">
             <a-space size="middle" align="center">
-              <span>Основное расписание вкл.</span>
+              <span>Основное расписание</span>
               <a-switch v-model:checked="isMainFile" />
             </a-space>
             <input

@@ -41,7 +41,7 @@ const isActive = computed(() => {
 </script>
 
 <template>
-  <td class="cell__lesson" :class="{
+  <td class="cell cell__lesson" :class="{
     'cell--active': isActive,
     'cell--temp': currentClass && isTemp
   }">
@@ -57,16 +57,15 @@ const isActive = computed(() => {
 .cell {
   &__lesson {
     width: calc(100vw / 7 + 7px);
-    text-align: left;
   }
 
   &--active {
-    background-color: $cell-active-border;
-    color: $cell-active-text;
+    background-color: $cell-active-border !important;
+    color: $cell-active-text !important;
   }
 
   &--temp {
-    position: relative;
+    position: relative !important;
   }
 
   .icon {

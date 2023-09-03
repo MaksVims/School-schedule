@@ -12,12 +12,16 @@
 
 html,
 body,
-#app,
-p,
-span {
+#app{
   font-size: $text-normal;
   font-weight: 400;
   color: $text-color;
+}
+
+p,
+span {
+  font-size: inherit;
+  color: inherit;
 }
 
 body {
@@ -122,4 +126,14 @@ svg {
 .ant-input-affix-wrapper-focused {
   box-shadow: none !important;
   border: 1px solid $accent-light !important;
+}
+
+.ant-space-item {
+  height: 100%;
+  width: 100%;
+}
+
+.space {
+  width: 100%;
+  min-height: 100vh;
 }
