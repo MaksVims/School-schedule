@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toRefs, ref, watch, computed } from "vue";
 import { InputApp, ButtonApp, Loader } from "../components/UI";
-import { useEvent } from '../hooks/useEvent'
+import { useEvent } from "../hooks/useEvent";
 
 interface FormLoginProps {
   fetch: () => Promise<void>;
@@ -20,21 +20,26 @@ const { fetch } = props;
 const { loading, login, password } = toRefs(props);
 const isDisabled = ref(true);
 
-useEvent(document.body, 'keydown', (e: Event) => {
-  if ((e as KeyboardEvent).code === 'Enter' && password.value && login.value && isDisabled.value === false) {
-    fetch()
+useEvent(document.body, "keydown", (e: Event) => {
+  if (
+    (e as KeyboardEvent).code === "Enter" &&
+    password.value &&
+    login.value &&
+    isDisabled.value === false
+  ) {
+    fetch();
   }
-})
+});
 
 const loginValue = computed({
   get: () => login.value,
-  set: (value: string) => emit('update:login', value)
-})
+  set: (value: string) => emit("update:login", value),
+});
 
 const passwordValue = computed({
   get: () => password.value,
-  set: (value: string) => emit('update:password', value)
-})
+  set: (value: string) => emit("update:password", value),
+});
 
 watch([login, password], () => {
   if (login.value && password.value) {
@@ -51,16 +56,24 @@ watch([login, password], () => {
     <label class="form__row">
       <span>Логин:</span>
       <div class="form__input-wrapper">
-        <InputApp class="form__input" placeholder="Логин..." isFocus v-model="loginValue" />
+        <a-input placeholder="Логин..." v-model:value="loginValue" autofocus />
       </div>
     </label>
     <label class="form__row">
       <span>Пароль:</span>
       <div class="form__input-wrapper">
-        <InputApp type="password" class="form__input" placeholder="Пароль..." v-model="passwordValue" />
+        <a-input-password
+          v-model:value="passwordValue"
+          placeholder="Пароль..."
+        />
       </div>
     </label>
-    <ButtonApp :disabled="isDisabled || loading" class="form__btn center" type="submit" @pointerdown="fetch">
+    <ButtonApp
+      :disabled="isDisabled || loading"
+      class="form__btn center"
+      type="submit"
+      @click="fetch"
+    >
       <template v-if="!loading">Войти</template>
       <Loader v-else class="loader" />
     </ButtonApp>
@@ -105,12 +118,6 @@ watch([login, password], () => {
     }
   }
 
-  &__input {
-    &:focus {
-      border: 1px solid $main-light;
-    }
-  }
-
   &__input-wrapper {
     width: 430px;
   }
@@ -124,7 +131,6 @@ watch([login, password], () => {
 }
 
 @media (max-width: $mobile) {
-
   .form {
     &__input-wrapper {
       width: 250px;

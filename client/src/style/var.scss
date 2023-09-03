@@ -2,8 +2,8 @@
 // ----------- Color -------------
 // $main-light: #5cc7f1; 
 // $main: #0850f2;
-$main-light: #f0ff1b; 
-$main: #03940f; 
+$main-light: #f0ff1b;
+$main: #03940f;
 $title-color: black;
 $text-color: rgb(46, 46, 46);
 $text-error-color: red;
@@ -22,7 +22,7 @@ $bg-wrapper: rgb(228, 228, 228);
 $btn-admin-dark: rgb(46, 46, 46);
 
 $btn-formlogin-color: white;
-$btn-formlogin-bg: #2afa46;
+$btn-formlogin-bg: #1dd836;
 $btn-formlogin-hover-bg: #1c8d2b;
 $btn-formlogin-disable-bg: darkgrey;
 
@@ -46,7 +46,8 @@ $icon-loadfile: #1c8d2b;
 
 //gradient
 $gradient-main: linear-gradient(90deg, $main 0%, $main-light 50%, $main 100%);
-$gradient-secondary: radial-gradient(circle,  $main 0%, $main-light 50%, $main 100%);;
+$gradient-secondary: radial-gradient(circle, $main 0%, $main-light 50%, $main 100%);
+;
 
 
 // ----------- Font-Size -------------
@@ -84,7 +85,7 @@ $mini: 290px;
 $mobile-small: 440px;
 $mobile: 600px;
 $tabletop: 1200px;
-$desktop:1600px;
+$desktop: 1600px;
 $desltop-big: 1900px;
 
 $height-small: 600px;

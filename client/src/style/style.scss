@@ -88,3 +88,30 @@ svg {
     font-size: $title-small;
   }
 }
+
+// input antdesign options
+.ant-input-affix-wrapper.ant-input-password,
+.ant-input {
+  border: 1px solid $border-input;
+  border-radius: 0px;
+  padding: 5px 15px;
+
+  &:hover {
+    border: 1px solid $main-light;
+    box-shadow: none !important;
+  }
+
+  &:focus {
+    border: 1px solid $main-light;
+    box-shadow: none !important;
+  }
+}
+
+.ant-input {
+  font-size: $subtitle-small;
+}
+
+.ant-input-affix-wrapper-focused {
+  box-shadow: none !important;
+  border: 1px solid $main-light !important;
+}
