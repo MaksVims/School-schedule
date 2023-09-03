@@ -105,7 +105,7 @@ const handleSetSelectNumberClass = (value: string) => {
   position: relative;
   display: flex;
   justify-content: center;
-  gap: $gap-xxs;
+  gap: $gap-xxl;
   z-index: 10;
 }
 

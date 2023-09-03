@@ -184,22 +184,6 @@ watch(error, () => {
             </a-row>
           </a-space>
         </a-modal>
-        <!-- <PopupApp
-          :handle-close="closeSuccessPopup"
-          :is-show="isShowSuccessPopup"
-        >
-          <div class="modal__content">
-            <h5>Загрузить документ как основное расписание?</h5>
-            <div class="modal__buttons">
-              <ButtonApp class="modal__btn" @click="handleLoadMainFile"
-                >Да</ButtonApp
-              >
-              <ButtonApp class="modal__btn" @click="closeSuccessPopup"
-                >Нет</ButtonApp
-              >
-            </div>
-          </div>
-        </PopupApp> -->
       </section>
     </main>
   </div>
