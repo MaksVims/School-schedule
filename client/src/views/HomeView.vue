@@ -75,36 +75,32 @@ onMounted(async () => {
 <template>
   <div v-if="!loading" class="home" ref="homeRef">
     <a-space direction="vertical" class="space" :size="0">
-      <a-layout style="height:100vh">
+      <a-layout style="height: 100vh">
         <a-layout-header class="header">
           <!-- <Snow /> -->
-          <a-space style="width: 100%" direction="vertical">
-            <a-row align="center" :gutter="{ xs: 8, sm: 16, md: 24, lg: 32 }">
-              <a-col :offset="3" :span="17" :xxl="{ offset: 4, span: 16 }">
+          <div class="header__clock">
+            <Clock class="clock" />
+            <div
+              class="header__lastUpdateDate lastUpdateDate"
+              v-if="lastUpdateDate"
+            >
+              <p>Обновлено:</p>
+              <p class="date-update">
+                {{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}
+                {{
+                  getFormatDateHourAndMinute(
+                    new Date(lastUpdateDate.lastUpdate)
+                  )
+                }}
+              </p>
+            </div>
+          </div>
+          <a-space style="width: 100%" direction="vertical" :size="35">
+            <a-row align="center">
+              <a-col :span="24">
                 <h1 class="title header__title">
                   Расписание уроков школы № 116
                 </h1>
-              </a-col>
-              <a-col :xxl="{ offset: 1, span: 3 }" :offset="0" :span="3">
-                <div class="header__clock">
-                  <Clock class="clock" />
-                  <!-- <div
-                    align="center"
-                    justify="center"
-                    class="header__lastUpdateDate lastUpdateDate"
-                    v-if="lastUpdateDate"
-                  >
-                    <p>Обновлено:</p>
-                    <p class="date-update">
-                      {{ getFormatDate(new Date(lastUpdateDate.lastUpdate)) }}
-                      {{
-                        getFormatDateHourAndMinute(
-                          new Date(lastUpdateDate.lastUpdate)
-                        )
-                      }}
-                    </p>
-                  </div> -->
-                </div>
               </a-col>
             </a-row>
             <a-row align="center" :gutter="{ xs: 8, sm: 16, md: 24, lg: 32 }">
@@ -155,9 +151,10 @@ onMounted(async () => {
   background: $gradient-main;
 
   &__clock {
-    position: relative;
-    width: 100%;
-    
+    position: absolute;
+    width: 230px;
+    top: 30px;
+    right: 30px;
   }
 
   &__title {
@@ -169,7 +166,7 @@ onMounted(async () => {
 
   &__lastUpdateDate {
     position: absolute;
-    top: 110px;
+    top: 130px;
     font-size: $text-small;
     text-align: center;
     color: #fff;
@@ -199,6 +196,12 @@ onMounted(async () => {
   font-size: $text-veryBig;
 }
 
+@media (max-width: $desktop-big) {
+  .header__clock {
+    width: 220px;
+  }
+}
+
 @media (max-width: $desktop) {
   .header {
     &__title {
@@ -207,6 +210,10 @@ onMounted(async () => {
 
     & .clock {
       font-size: $title-normal;
+    }
+
+    &__clock {
+      width: 200px;
     }
   }
 }
@@ -218,21 +225,5 @@ onMounted(async () => {
   }
 }
 
-@media (min-height: $height-tabletop) {
-  .header {
-    gap: $gap-normal;
-  }
-}
 
-@media (min-height: $height-desktop) {
-  .header {
-    gap: $gap-medium;
-  }
-}
-
-@media (min-height: $height-desktop-big) {
-  .header {
-    gap: $gap-medium;
-  }
-}
 </style>
