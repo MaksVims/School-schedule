@@ -44,8 +44,8 @@ $cell-active-border: $main;
 $cell-active-text: white;
 
 //loader
-$loader-home: #5cc7f1;
-$loader-admin: #5cc7f1;
+$loader-home: $accent-light;
+$loader-admin: $accent-light;
 
 //icon 
 $icon-loadfile: $green;

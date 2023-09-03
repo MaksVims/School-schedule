@@ -23,7 +23,7 @@ const routes = [
   {
     path: SITE_ROUTES.home,
     name: 'Main',
-    component: MobileDetect ? MobileViewHome : HomeView,
+    component: isMobile ? MobileViewHome : HomeView,
   },
   {
     path: SITE_ROUTES.login,

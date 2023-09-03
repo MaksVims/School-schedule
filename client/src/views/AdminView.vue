@@ -3,14 +3,7 @@ import { ref, watch } from "vue";
 import { ClassService, AuthService } from "../api";
 import { SvgAddFile } from "../components/Svg";
 import { useFetch, useTitle } from "../hooks";
-import {
-  CheckboxApp,
-  Loader,
-  TextError,
-  TextSuccess,
-  PopupApp,
-  ButtonApp,
-} from "../components/UI";
+import { Loader, TextError, TextSuccess, ButtonApp } from "../components/UI";
 import { ERRORS, SITE_ROUTES } from "../consts";
 import { getToken } from "../helpers";
 

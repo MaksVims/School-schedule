@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toRefs, ref, watch, computed } from "vue";
-import { InputApp, ButtonApp, Loader } from "../components/UI";
+import { ButtonApp, Loader } from "../components/UI";
 import { useEvent } from "../hooks/useEvent";
 
 interface FormLoginProps {
