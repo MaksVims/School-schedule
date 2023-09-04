@@ -188,7 +188,7 @@ onUnmounted(() => {
   font-size: $text-small;
 
   &:not(:first-child) {
-    min-width: 100px;
+    min-width: 105px;
   }
 
   &__time {
@@ -202,6 +202,12 @@ onUnmounted(() => {
 
 th.cell:first-child {
   min-width: 80px;
+}
+
+@media (max-width: $mobile-small) {
+  .cell {
+    padding: 6px 4px;
+  }
 }
 
 @media (min-width: $ipad) {

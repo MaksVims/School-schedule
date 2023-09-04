@@ -30,6 +30,7 @@ onMounted(() => {
   if (coursesClasses.value.includes(storageSelectCourse.value)) {
     setSelectCourseClass(storageSelectCourse.value);
   }
+
   if (numbersClasses.value.includes(storageSelectNumber.value)) {
     setSelectNumberClass(storageSelectNumber.value);
   }

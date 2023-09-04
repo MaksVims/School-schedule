@@ -153,9 +153,3 @@ svg {
     font-size: $text-normal;
   }
 }
-
-@media(max-height: $height-mobile-horizontal) {
-  .ant-select-selector {
-    // height: 30px !important;
-  }
-}

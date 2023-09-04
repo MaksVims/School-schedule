@@ -2,6 +2,7 @@
 import { onMounted } from "vue";
 import { ClassService } from "../api";
 import { MobileSelectMenu, MobileSchedule } from "../components/Mobile";
+import { Loader } from "../components/UI";
 import { useFetch } from "../hooks";
 import { useClassStore } from "../store";
 
@@ -42,11 +43,32 @@ onMounted(async () => {
       </a-layout>
     </a-space>
   </div>
+  <div v-else class="wrapper__loader center">
+    <Loader class="loader" />
+  </div>
 </template>
 
 
 <style scoped lang="scss">
 @import "@/style/var.scss";
+
+.wrapper {
+  &__loader {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.loader {
+  &::after {
+    width: 150px;
+    height: 150px;
+    margin: 1px;
+    border-width: 3px;
+    border-color: $loader-home transparent $loader-home transparent;
+  }
+}
+
 .home {
   min-height: 100vh;
 }

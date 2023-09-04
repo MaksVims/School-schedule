@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useClassStore } from "../../store";
-import { ref, toRefs, watch } from "vue";
+import { onMounted, ref, toRefs, watch } from "vue";
+import { useLocalStorage } from "../../hooks";
 
 const { setSelectCourseClass, setSelectNumberClass, setClasses } =
   useClassStore();
@@ -12,16 +13,40 @@ const {
   numbersClasses,
 } = toRefs(useClassStore());
 
+// Получаем данные из локального хранилища
+const storageSelectCourse = useLocalStorage("currentCourse");
+const storageSelectNumber = useLocalStorage("currentNumber");
+
 const displayCourseClass = ref("");
 const displayNumberClass = ref("");
 
+const handleSetSelectCourseClass = (value: string) => {
+  setSelectCourseClass(value);
+  storageSelectCourse.value = value;
+};
+
+const handleSetSelectNumberClass = (value: string) => {
+  setSelectNumberClass(value);
+  storageSelectNumber.value = value;
+};
+
+onMounted(() => {
+  // Установка данных о выбранном курсе и номере из localStorage в state
+  if (coursesClasses.value.includes(storageSelectCourse.value)) {
+    setSelectCourseClass(storageSelectCourse.value);
+  }
+
+  if (numbersClasses.value.includes(storageSelectNumber.value)) {
+    setSelectNumberClass(storageSelectNumber.value);
+  }
+});
+
 watch(selectedCourseClass, () => {
   displayCourseClass.value = "Класс " + selectedCourseClass.value;
-  setSelectNumberClass("");
-  displayNumberClass.value = "";
 });
 
 watch(selectedNumberClass, () => {
+  console.log(selectedNumberClass.value);
   displayNumberClass.value = "Номер " + selectedNumberClass.value;
 });
 </script>
@@ -30,7 +55,7 @@ watch(selectedNumberClass, () => {
   <a-col :span="24" class="mobile__select-menu">
     <a-select
       :value="displayCourseClass || null"
-      @change="setSelectCourseClass"
+      @change="handleSetSelectCourseClass"
       placeholder="Укажи класс"
       style="width: 150px; display: block"
       size="large"
@@ -41,6 +66,7 @@ watch(selectedNumberClass, () => {
           value: classes,
           label: classes,
         }))"
+        class="option"
         :key="item.value"
         :value="item.value"
         >{{ item.label }}</a-select-option
@@ -49,12 +75,12 @@ watch(selectedNumberClass, () => {
 
     <a-select
       :value="displayNumberClass || null"
-      @change="setSelectNumberClass"
+      @change="handleSetSelectNumberClass"
       placeholder="Номер"
-      :showArrow="selectedCourseClass || false"
-      style="width: 150px; display: block"
+      :showArrow="!!selectedCourseClass || false"
+      style="width: 140px; display: block"
       size="large"
-      :listHeight="300"
+      :listHeight="340"
       :disabled="!numbersClasses.length"
     >
       <a-select-option
@@ -80,5 +106,9 @@ watch(selectedNumberClass, () => {
     align-items: center;
     gap: $gap-small;
   }
+}
+
+.option {
+  font-size: 32px;
 }
 </style>
