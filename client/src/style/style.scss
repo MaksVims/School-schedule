@@ -138,3 +138,18 @@ svg {
   width: 100%;
   min-height: 100vh;
 }
+
+// .ant-select-disabled .ant-select-selector .ant-select-selection-placeholder {
+  
+// }
+
+.ant-select-selection-item, .ant-select-selection-placeholder {
+  font-size: $text-select-mobile;
+}
+
+
+@media (min-width: $ipad) {
+  .ant-select-selection-item, .ant-select-selection-placeholder {
+    font-size: $text-normal;
+  }
+}

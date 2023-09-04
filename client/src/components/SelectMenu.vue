@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, toRefs, onMounted } from "vue";
 import { useClassStore } from "../store";
-import { ButtonApp, PopupApp } from "../components/UI";
+import { ButtonApp } from "../components/UI";
 import { ListVariants } from "../components";
 import { useLocalStorage } from "../hooks";
 

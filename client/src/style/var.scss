@@ -58,12 +58,15 @@ $gradient-secondary: radial-gradient(circle, $main 0%, $main-light 50%, $main 10
 
 // ----------- Font-Size -------------
 $text-small: 12px;
+$text-select-mobile: 14px;
+$text-normal-mobile: 16px;
 $text-normal: 18px;
 $text-big: 24px;
 $text-veryBig: 32px;
 $text-xxl: 38px;
 $text-overSize: 46px;
 
+$title-mini:14px;
 $title-xxs:18px;
 $title-small: 24px;
 $title-normal: 32px;
@@ -92,6 +95,7 @@ $radius-big: 20px;
 $mini: 290px;
 $mobile-small: 440px;
 $mobile: 600px;
+$ipad: 768px;
 $tabletop: 1200px;
 $desktop: 1600px;
 $desktop-big: 2000px;
