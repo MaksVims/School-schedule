@@ -83,26 +83,26 @@ watch(error, () => {
   }
 }
 
-@media (min-height: $height-small) and (max-width: $mobile-small) {
+@media (max-width: $mobile-small) {
   .wrapper {
     min-height: 720px;
   }
 }
 
-@media (min-height: $height-small) and (max-width: $mini) {
+@media (max-width: $mini) {
   .wrapper {
     min-height: 940px;
   }
 }
 
-@media (min-height: $height-mobile) and (max-width: $mobile-small) {
+@media (max-width: $mobile-small) {
   .wrapper {
     min-height: 830px;
   }
 }
 
 
-@media (min-height: $height-tabletop) and (max-width: $mobile-small) {
+@media (max-width: $mobile-small) {
   .wrapper {
     min-height: 870px;
   }

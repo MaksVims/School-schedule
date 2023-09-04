@@ -73,14 +73,11 @@ body {
   &__title {
     font-size: $title-xxs;
     color: rgb(5, 5, 5);
-    margin-top: 15px;
     margin-bottom: 0;
     margin-top: 0;
     line-height: 32px;
   }
 }
-
-
 
 @media (max-width: $mini) {
   .header {
@@ -97,6 +94,23 @@ body {
     &__title {
       font-size: $title-small;
       line-height: 42px;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .content {
+    margin-bottom: 0px;
+  }
+}
+
+@media (max-height: $height-mobile-horizontal) {
+  .header {
+    padding: 10px;
+    height: 100px;
+
+    &__title {
+      line-height: 24px;
     }
   }
 }

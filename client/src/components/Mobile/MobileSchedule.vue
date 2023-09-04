@@ -87,6 +87,14 @@ watch(classes, () => {
   }
 });
 
+watch(currentClass, () => {
+  if (tableRef.value) {
+    setTimeout(() => {
+      installHeightCell(tableRef.value, displayTimeLessons.value.length + 1);
+    }, 0);
+  }
+});
+
 onMounted(() => {
   runTimeObserve();
   if (tableRef.value) {
@@ -179,6 +187,10 @@ onUnmounted(() => {
   border: 1px solid $cell-border;
   font-size: $text-small;
 
+  &:not(:first-child) {
+    min-width: 100px;
+  }
+
   &__time {
     width: 80px;
   }
@@ -202,11 +214,11 @@ th.cell:first-child {
   }
 
   .cell {
-  font-size: $text-normal-mobile;
+    font-size: $text-normal-mobile;
 
-  &__time {
-    width: 100px;
+    &__time {
+      width: 100px;
+    }
   }
-}
 }
 </style>

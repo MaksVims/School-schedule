@@ -87,6 +87,14 @@ watch(classes, () => {
   }
 });
 
+watch(currentClass, () => {
+  if (tableRef.value) {
+    setTimeout(() => {
+      installHeightCell(tableRef.value, displayTimeLessons.value.length + 1);
+    }, 0);
+  }
+});
+
 onMounted(() => {
   runTimeObserve();
   if (tableRef.value) {
@@ -177,6 +185,10 @@ onUnmounted(() => {
   text-align: center;
   border: 1px solid $cell-border;
   font-size: $text-big;
+
+  &:not(:first-child) {
+    min-width: 200px;
+  }
 
   &__time {
     width: 100px;

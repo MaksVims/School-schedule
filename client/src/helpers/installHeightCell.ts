@@ -1,6 +1,6 @@
 
 export const installHeightCell = (table: HTMLTableElement | null, rowsCount: number) => {
-  if(!table) return
+  if (!table) return
   const rows = table.querySelectorAll('tr')
 
   if (table) {

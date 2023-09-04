@@ -80,7 +80,5 @@ watch(selectedNumberClass, () => {
     align-items: center;
     gap: $gap-small;
   }
-  
 }
-
 </style>

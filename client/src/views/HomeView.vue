@@ -133,6 +133,7 @@ onMounted(async () => {
 
 .content {
   height: 80%;
+  margin-bottom: 15px;
 }
 
 .home {
@@ -222,6 +223,12 @@ onMounted(async () => {
   .home {
     width: 1200px;
     overflow: auto;
+  }
+}
+
+@media (min-width: $tabletop) {
+  .content {
+    margin-bottom: 0;
   }
 }
 
