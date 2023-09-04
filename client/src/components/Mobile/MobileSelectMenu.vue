@@ -46,7 +46,6 @@ watch(selectedCourseClass, () => {
 });
 
 watch(selectedNumberClass, () => {
-  console.log(selectedNumberClass.value);
   displayNumberClass.value = "Номер " + selectedNumberClass.value;
 });
 </script>
@@ -57,7 +56,7 @@ watch(selectedNumberClass, () => {
       :value="displayCourseClass || null"
       @change="handleSetSelectCourseClass"
       placeholder="Укажи класс"
-      style="width: 150px; display: block"
+      style="width: 140px; display: block"
       size="large"
       :listHeight="300"
     >
@@ -66,7 +65,6 @@ watch(selectedNumberClass, () => {
           value: classes,
           label: classes,
         }))"
-        class="option"
         :key="item.value"
         :value="item.value"
         >{{ item.label }}</a-select-option
@@ -106,9 +104,5 @@ watch(selectedNumberClass, () => {
     align-items: center;
     gap: $gap-small;
   }
-}
-
-.option {
-  font-size: 32px;
 }
 </style>
