@@ -22,7 +22,6 @@ class DateController {
       })
     }
     catch (e) {
-      console.log(`DateController: ${e}`)
       res.status(400).json({ message: 'Ошибка запроса' })
     }
   }

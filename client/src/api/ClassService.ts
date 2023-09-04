@@ -1,6 +1,7 @@
 import { CourseClass } from "../types";
 import { routesClasses } from './routesClasses'
 import { axiosApp } from './axiosApp'
+import { TIMEOUT_FETCH } from "../consts";
 
 export class ClassService {
 
@@ -20,7 +21,7 @@ export class ClassService {
   }
 
   static async subscribeUpdateData() {
-    const response = await axiosApp.get<{ message: CourseClass[] }>(routesClasses.updateData)
+    const response = await axiosApp.get<{ message: CourseClass[] }>(routesClasses.updateData, { timeout: 10000 })
     return response.data.message
   }
 }

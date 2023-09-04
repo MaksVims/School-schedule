@@ -1,6 +1,7 @@
 import { routesClasses } from '../api/routesClasses'
 import { axiosApp } from './axiosApp'
 import { DateLastUpdate } from '../types'
+import { TIMEOUT_FETCH } from '../consts'
 
 export class DateService {
 
@@ -10,7 +11,7 @@ export class DateService {
   }
 
   static async subscribeLastUpdateDate() {
-    const response = await axiosApp.get<{ message: DateLastUpdate }>(routesClasses.updateDateLastUpdate)
+    const response = await axiosApp.get<{ message: DateLastUpdate }>(routesClasses.updateDateLastUpdate, {timeout: TIMEOUT_FETCH})
     return response.data.message
   }
 }

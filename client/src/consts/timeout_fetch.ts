@@ -1,0 +1,1 @@
+export const TIMEOUT_FETCH = 3600000
