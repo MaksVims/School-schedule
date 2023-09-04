@@ -139,7 +139,7 @@ const handleSetSelectNumberClass = (value: string) => {
   flex-direction: column;
   text-align: center;
   min-height: 400px;
-  padding: 20px 20px;
+  padding: 20px;
   background-color: white;
 }
 

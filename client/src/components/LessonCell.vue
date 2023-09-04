@@ -11,11 +11,12 @@ interface LessonCellProps {
   minOrder: number,
   currentOrder: number
   currentDay: number
-  cellDay: number
+  cellDay: number,
+  isMobile?: boolean
 }
 
 const props = defineProps<LessonCellProps>()
-const { cellDay, currentDay, currentOrder, minOrder, rowIdx } = toRefs(props)
+const { cellDay, currentDay, currentOrder, minOrder, rowIdx, isMobile } = toRefs(props)
 const isTemp = ref(false)
 
 const orderLesson = computed(() => rowIdx.value + minOrder.value)
@@ -47,7 +48,7 @@ const isActive = computed(() => {
   }">
     <template v-if="currentClass && !isTemp">{{ lesson?.name }}</template>
     <template v-else-if="isTemp">{{ lesson?.tempName }}</template>
-    <SvgTempLesson v-if="currentClass && isTemp" class="icon" :class="{ 'icon--active': isActive && isTemp }" />
+    <SvgTempLesson v-if="currentClass && isTemp" class="icon" :class="{ 'icon--active': isActive && isTemp, 'icon-mobile': isMobile}" />
   </td>
 </template>
 
@@ -80,6 +81,13 @@ const isActive = computed(() => {
     &--active {
       fill: white;
     }
+  }
+
+  .icon-mobile {
+    right: 5px;
+    top: 5px;
+    height: .8rem;
+    width: .8rem;
   }
 }
 </style>

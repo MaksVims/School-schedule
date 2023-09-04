@@ -47,7 +47,7 @@ const { items } = toRefs(props);
     flex-grow: 0;
     width: 90px;
     transition: border 0.1s;
-    padding: 20px;
+    padding: 20px !important;
     border: 2px solid $btn-select-popup-border;
     font-size: $text-veryBig;
 

@@ -8,10 +8,24 @@ import { useClassStore } from "../store";
 
 const { setClasses } = useClassStore();
 
+// Подписка для автообновления данных расписания
+const subscribeUpdateData = async () => {
+  try {
+    const updatedData = await ClassService.subscribeUpdateData();
+    setClasses(updatedData);
+    subscribeUpdateData();
+  } catch (e) {
+    setTimeout(() => {
+      subscribeUpdateData();
+    }, 500);
+  }
+};
+
 // Загружаем данные
 const { fetch: fetchData, loading } = useFetch(async () => {
   const fetchData = await ClassService.getAll();
   setClasses(fetchData);
+  subscribeUpdateData();
 });
 
 onMounted(async () => {

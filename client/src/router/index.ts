@@ -1,11 +1,14 @@
 import { createRouter, createWebHistory, RouteLocationNormalized } from "vue-router";
-import { HomeView, LoginView, AdminView, MobileViewHome } from '../views'
 import { SITE_ROUTES } from '../consts'
 import { useFetch } from '../hooks'
 import { AuthService } from "../api";
 import { getToken } from '../helpers'
 import MobileDetect from "mobile-detect";
 
+const LazyHomeView = () => import('../views/HomeView.vue')
+const LazyLoginView = () => import('../views/LoginView.vue')
+const LazyAdminView = () => import('../views/AdminView.vue')
+const LazyMobileViewHome = () => import('../views/MobileViewHome.vue')
 
 const detect = new MobileDetect(window.navigator.userAgent)
 const isMobile = detect.mobile()
@@ -23,11 +26,11 @@ const routes = [
   {
     path: SITE_ROUTES.home,
     name: 'Main',
-    component: isMobile ? MobileViewHome : HomeView,
+    component: isMobile ? LazyMobileViewHome : LazyHomeView,
   },
   {
     path: SITE_ROUTES.login,
-    component: LoginView,
+    component: LazyLoginView,
     beforeEnter: async () => {
       if (isMobile) {
         router.push(SITE_ROUTES.home)
@@ -41,7 +44,7 @@ const routes = [
   },
   {
     path: SITE_ROUTES.adminPanel,
-    component: AdminView,
+    component: LazyAdminView,
     beforeEnter: async () => {
       if (isMobile) {
         router.push(SITE_ROUTES.home)
