@@ -2,11 +2,10 @@
 import { onMounted, ref, toRefs } from "vue";
 import { ClassService, DateService } from "../api";
 import { SelectMenu, Schedule, Clock } from "../components";
-import { Loader, Snow, ButtonApp } from "../components/UI";
+import { Loader, Snow } from "../components/UI";
 import { useFetch, useTitle, useEvent } from "../hooks";
 import { useClassStore, useAppStore } from "../store";
 import { getFormatDate, getFormatDateHourAndMinute } from "../helpers";
-import { RouterLink } from "vue-router";
 
 const { setClasses } = useClassStore();
 const { setLastUpdateDate } = useAppStore();
