@@ -118,7 +118,6 @@ class ClassController {
   static async updateData(req, res) {
     try {
       emitter.once(eventsName.updateData, updatedData => {
-        console.log('response update data');
         res.status(200).json({ message: updatedData })
       })
     }

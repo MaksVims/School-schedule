@@ -1,59 +1,78 @@
 <script lang="ts" setup>
-import { toRefs, computed, ref } from 'vue';
-import { useClassStore } from '../store'
-import { getLesson } from '../helpers'
-import { SvgTempLesson } from '../components/Svg'
+import { toRefs, computed, ref } from "vue";
+import { useClassStore } from "../store";
+import { getLesson } from "../helpers";
+import { SvgTempLesson } from "../components/Svg";
 
-const { currentClass } = toRefs(useClassStore())
+const { currentClass, selectedCourseClass, selectedNumberClass } = toRefs(
+  useClassStore()
+);
 
 interface LessonCellProps {
-  rowIdx: number,
-  minOrder: number,
-  currentOrder: number
-  currentDay: number
-  cellDay: number,
-  isMobile?: boolean
+  rowIdx: number;
+  minOrder: number;
+  currentOrder: number;
+  currentDay: number;
+  cellDay: number;
+  isMobile?: boolean;
 }
 
-const props = defineProps<LessonCellProps>()
-const { cellDay, currentDay, currentOrder, minOrder, rowIdx, isMobile } = toRefs(props)
-const isTemp = ref(false)
+const props = defineProps<LessonCellProps>();
+const { cellDay, currentDay, currentOrder, minOrder, rowIdx, isMobile } =
+  toRefs(props);
+const isTemp = ref(false);
 
-const orderLesson = computed(() => rowIdx.value + minOrder.value)
+const orderLesson = computed(() => rowIdx.value + minOrder.value);
 
 const lesson = computed(() => {
   if (currentClass.value) {
-    const lessonCell = getLesson(currentClass.value, cellDay.value, orderLesson.value)
-    isTemp.value = lessonCell?.isTemp || false
-    return lessonCell
+    const lessonCell = getLesson(
+      currentClass.value,
+      cellDay.value,
+      orderLesson.value
+    );
+    isTemp.value = lessonCell?.isTemp || false;
+    return lessonCell;
   } else {
-    return null
+    return null;
   }
-})
+});
 
 const isActive = computed(() => {
-  return orderLesson.value == currentOrder.value &&
+  return (
+    selectedCourseClass.value &&
+    selectedNumberClass.value &&
+    orderLesson.value == currentOrder.value &&
     cellDay.value == currentDay.value &&
-    currentClass && lesson &&
+    currentClass &&
+    lesson &&
     // Если не временное и не пустое name или если временное и не пустое tempName
-    ((!lesson.value?.isTemp && lesson.value?.name !== '') || (lesson.value.isTemp && lesson.value?.tempName !== ''))
-})
-
+    ((!lesson.value?.isTemp && lesson.value?.name !== "") ||
+      (lesson.value.isTemp && lesson.value?.tempName !== ""))
+  );
+});
 </script>
 
 <template>
-  <td class="cell cell__lesson" :class="{
-    'cell--active': isActive,
-    'cell--temp': currentClass && isTemp
-  }">
+  <td
+    class="cell cell__lesson"
+    :class="{
+      'cell--active': isActive,
+      'cell--temp': currentClass && isTemp,
+    }"
+  >
     <template v-if="currentClass && !isTemp">{{ lesson?.name }}</template>
     <template v-else-if="isTemp">{{ lesson?.tempName }}</template>
-    <SvgTempLesson v-if="currentClass && isTemp" class="icon" :class="{ 'icon--active': isActive && isTemp, 'icon-mobile': isMobile}" />
+    <SvgTempLesson
+      v-if="currentClass && isTemp"
+      class="icon"
+      :class="{ 'icon--active': isActive && isTemp, 'icon-mobile': isMobile }"
+    />
   </td>
 </template>
 
 <style lang="scss" scoped>
-@import '@/style/var.scss';
+@import "@/style/var.scss";
 
 .cell {
   &__lesson {
@@ -86,8 +105,8 @@ const isActive = computed(() => {
   .icon-mobile {
     right: 5px;
     top: 5px;
-    height: .8rem;
-    width: .8rem;
+    height: 0.8rem;
+    width: 0.8rem;
   }
 }
 </style>

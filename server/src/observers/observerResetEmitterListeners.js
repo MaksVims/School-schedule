@@ -3,14 +3,9 @@ const { eventsName } = require('../consts/literals')
 const ClassService = require('../service/ClassService')
 const DateService = require('../service/DateService')
 
-
 function observerResetEmitterListeners(ms) {
 
   setInterval(async () => {
-    emitter.eventNames().forEach(name => {
-      console.log(`${name} ${emitter.listenerCount(name)}`);
-    })
-
     try {
       const allCourses = await ClassService.getAll()
       const dateLastUpdate = await DateService.getDateLastUpdate()
