@@ -14,7 +14,7 @@ interface LessonCellProps {
   currentOrder: number;
   currentDay: number;
   cellDay: number;
-  isMobile?: boolean;
+  isMobile: boolean;
 }
 
 const props = defineProps<LessonCellProps>();
@@ -40,33 +40,37 @@ const lesson = computed(() => {
 
 const isActive = computed(() => {
   return (
-    selectedCourseClass.value &&
-    selectedNumberClass.value &&
-    orderLesson.value == currentOrder.value &&
-    cellDay.value == currentDay.value &&
-    currentClass &&
-    lesson &&
-    // Если не временное и не пустое name или если временное и не пустое tempName
-    ((!lesson.value?.isTemp && lesson.value?.name !== "") ||
-      (lesson.value.isTemp && lesson.value?.tempName !== ""))
+    (selectedCourseClass.value &&
+      selectedNumberClass.value &&
+      orderLesson.value == currentOrder.value &&
+      cellDay.value == currentDay.value &&
+      currentClass &&
+      lesson &&
+      // Если не временное и не пустое name или если временное и не пустое tempName
+      ((!lesson.value?.isTemp && lesson.value?.name !== "") ||
+        (lesson.value.isTemp && lesson.value?.tempName !== ""))) ||
+    false
   );
 });
+
+const cellClasses = computed(() => ({
+  "cell--active": isActive.value,
+  "cell--temp": currentClass.value && isTemp.value,
+}));
+
+const tempIconClasses = computed(() => ({
+  "icon--active": isActive.value && isTemp.value,
+  "icon-mobile": isMobile.value,
+}));
 </script>
 
 <template>
-  <td
-    class="cell cell__lesson"
-    :class="{
-      'cell--active': isActive,
-      'cell--temp': currentClass && isTemp,
-    }"
-  >
+  <td :class="['cell', 'cell__lesson', cellClasses]">
     <template v-if="currentClass && !isTemp">{{ lesson?.name }}</template>
     <template v-else-if="isTemp">{{ lesson?.tempName }}</template>
     <SvgTempLesson
       v-if="currentClass && isTemp"
-      class="icon"
-      :class="{ 'icon--active': isActive && isTemp, 'icon-mobile': isMobile }"
+      :class="['icon', tempIconClasses]"
     />
   </td>
 </template>

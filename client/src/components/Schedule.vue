@@ -149,6 +149,7 @@ onUnmounted(() => {
           <!-- dayOfWeekCell день недели -->
           <LessonCell
             v-for="(day, dayOfWeekCell) in DAY_OF_WEEK"
+            :isMobile="false"
             class="cell"
             :key="dayOfWeekCell"
             :rowIdx="rowIdx"
